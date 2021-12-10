@@ -375,10 +375,18 @@
 "Assets/3rdPartyAssets/sumMusic/Scripts/SumMusic.cs"
 "Assets/3rdPartyAssets/sumMusic/Scripts/SumMusicButton.cs"
 "Assets/3rdPartyAssets/sumMusic/Scripts/SumMusicButtonImage.cs"
+"Assets/Creatures/Scripts/ICreature.cs"
 "Assets/ExampleAssets/Scripts/SimpleCameraController.cs"
 "Assets/ExampleAssets/TutorialInfo/Scripts/Readme.cs"
+"Assets/Level/Scripts/MazeCell.cs"
+"Assets/Level/Scripts/MazeGenerator.cs"
+"Assets/Other/GameController.cs"
+"Assets/Other/TestGameMode.cs"
 "Assets/Player/Movement/MovementController.cs"
+"Assets/Player/Movement/Player_Input_Manager.cs"
 "Assets/Player/Other/PlayerInfo.cs"
+"Assets/Weapons/Scripts/IWeapon.cs"
+"Assets/Weapons/Scripts/Weapon_AR.cs"
 -langversion:8.0
 
 /deterministic

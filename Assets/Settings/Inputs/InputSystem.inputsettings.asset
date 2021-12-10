@@ -15,9 +15,7 @@ MonoBehaviour:
   m_SupportedDevices:
   - Mouse
   - Keyboard
-  - Gamepad
-  - Joystick
-  m_UpdateMode: 3
+  m_UpdateMode: 2
   m_CompensateForScreenOrientation: 1
   m_FilterNoiseOnCurrent: 0
   m_DefaultDeadzoneMin: 0.125
