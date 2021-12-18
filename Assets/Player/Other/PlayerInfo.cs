@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float health;
+
+    
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float damage)
     {
-        
+        health -= damage;
     }
 }

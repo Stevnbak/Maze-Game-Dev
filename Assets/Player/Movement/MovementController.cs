@@ -102,9 +102,9 @@ public class MovementController : MonoBehaviour
         Transform lookingAt = transform.Find("LookingAt");
         float maxHeight = Mathf.Tan(maxVerticalAngle * Mathf.PI / 180) * lookingAt.localPosition.z;
 
-        float yLook = mouseVec.y * 0.011f * sensitivity;
+        float yLook = mouseVec.y * 0.0011f * sensitivity;
         //Debug.Log("Delta Y: " + mouseVec.y + "Rotation Y: " + yLook);
-        lookingAt.Translate(new Vector3(0, yLook, 0));
+        lookingAt.Translate(new Vector3(0, yLook * lookingAt.position.z, 0));
 
         //Max height looking at can be
         
