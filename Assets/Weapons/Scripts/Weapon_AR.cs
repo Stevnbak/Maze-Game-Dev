@@ -7,7 +7,9 @@ public class Weapon_AR : MonoBehaviour, IWeapon
 {
     [Header("Stats")]
     public float damage;
-    public float firerate, ammoMagTotal, ammoInMag, ammoTotal, reloadTime;
+    public float firerate, setAmmoTotal, ammoMagTotal, reloadTime;
+    public float ammoInMag {get; set;}
+    public float ammoTotal { get; set; }
     public Transform lookingAt;
 
     [Header("Shooting")]
@@ -36,11 +38,15 @@ public class Weapon_AR : MonoBehaviour, IWeapon
 
     void Start()
     {
-        
+        //Update total ammo from editor
+        ammoTotal = setAmmoTotal;
     }
 
     void Update()
     {
+        //Update editor total ammo
+        setAmmoTotal = ammoTotal;
+
         //Aim gun
         transform.LookAt(lookingAt);
 

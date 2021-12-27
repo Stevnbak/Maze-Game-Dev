@@ -1,3 +1,4 @@
+using UnityEngine;
 public interface IWeapon
 {
     void Initialize();
@@ -5,5 +6,8 @@ public interface IWeapon
     bool isReloading { get; set; }
     bool isADSing { get; set; }
     float fireTime { get; set; }
+    float ammoInMag { get; set; }
+    float ammoTotal { get; set; }
+
     void Fire();
 }

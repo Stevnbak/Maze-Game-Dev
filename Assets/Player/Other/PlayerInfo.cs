@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour
 {
     public float health;
-
+    public float maxHealth;
     
     void Update()
     {
