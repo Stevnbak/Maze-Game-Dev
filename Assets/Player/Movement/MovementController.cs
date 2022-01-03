@@ -26,7 +26,6 @@ public class MovementController : MonoBehaviour
         maxSpeed = walkSpeed;
         Physics.gravity = new Vector3(0,-gravity,0);
     }
-    
 
     //Update
     void Update()

@@ -40,6 +40,7 @@ public class Weapon_AR : MonoBehaviour, IWeapon
     {
         //Update total ammo from editor
         ammoTotal = setAmmoTotal;
+        Reload();
     }
 
     void Update()
@@ -63,6 +64,7 @@ public class Weapon_AR : MonoBehaviour, IWeapon
         //Reload
         if (isReloading)
         {
+            if(reloadTimer == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
             reloadTimer += Time.deltaTime;
             if(reloadTimer >= reloadTime) Reload();
         }

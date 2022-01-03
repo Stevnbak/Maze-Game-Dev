@@ -9,6 +9,8 @@ TagManager:
   - MazeObject
   - Weapon
   - Creature
+  - Item
+  - Trap
   layers:
   - Default
   - TransparentFX

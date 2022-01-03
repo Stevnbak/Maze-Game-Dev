@@ -7,6 +7,11 @@ public class Player_Input_Manager : MonoBehaviour
 {
     MovementController movementController;
     IWeapon weaponManager;
+    bool interacting;
+    IInteractable interactable;
+    Transform interactTrans;
+    public float maxInteractDistance;
+    float t;
 
     private void Start()
     {
@@ -48,6 +53,7 @@ public class Player_Input_Manager : MonoBehaviour
             weaponManager.Fire();
             weaponManager.isFiring = true;
             weaponManager.isReloading = false;
+            interacting = false;
         }
         else
         {
@@ -63,6 +69,7 @@ public class Player_Input_Manager : MonoBehaviour
             weaponManager.isReloading = true;
             weaponManager.isADSing = false;
             weaponManager.isFiring = false;
+            interacting = false;
         }
     }
 
@@ -72,9 +79,68 @@ public class Player_Input_Manager : MonoBehaviour
         {
             weaponManager.isReloading = false;
             weaponManager.isADSing = true;
+            interacting = false;
         } else
         {
             weaponManager.isADSing = false;
         }
     }
+
+    //Interact
+    void OnInteraction(InputValue input)
+    {
+        if (input.Get<float>() == 1)
+        {
+            int layerMask = 1 << 6;
+            layerMask = ~layerMask;
+            Vector3 direction = Camera.main.transform.TransformDirection(Vector3.forward);
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, direction, out hit, maxInteractDistance, layerMask))
+            {
+                Debug.DrawRay(Camera.main.transform.position, direction * hit.distance, Color.blue);
+                GameObject hitObject = hit.transform.gameObject;
+                if (hitObject.CompareTag("Item"))
+                {
+                    t = 0;
+                    interactable = hitObject.GetComponent<IInteractable>();
+                    interacting = true;
+                    weaponManager.isReloading = false;
+                    weaponManager.isFiring = false;
+                    weaponManager.isADSing = false;
+                    interactTrans = hitObject.transform;
+                }
+            }
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().stopInteractTimer();
+            t = 0;
+            interacting = false;
+        }
+    }
+
+    void Update()
+    {
+        if (interacting)
+        {
+            if (t == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(interactable.time);
+            t += Time.deltaTime;
+            if (t >= interactable.time)
+            {
+                interactable.interact();
+                t = 0;
+                interacting = false;
+            }
+            if (Vector3.Distance(interactTrans.position, Camera.main.transform.position) > maxInteractDistance)
+            {
+                interacting = false;
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().stopInteractTimer();
+                t = 0;
+            }
+        } 
+    }
 }
+
+
+

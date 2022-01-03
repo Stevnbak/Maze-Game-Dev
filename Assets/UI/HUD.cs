@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour
     public Image WeaponIcon;
     public Image Crosshair;
     public Slider HealthBar;
+    public Image Interact;
 
     [Header("Info")]
     GameObject player;
@@ -19,6 +20,8 @@ public class HUD : MonoBehaviour
     public float maxHealth;
     public float ammo;
     public float totalAmmo;
+    public bool interactInProgress;
+    float t, time;
 
     void Start()
     {
@@ -40,5 +43,31 @@ public class HUD : MonoBehaviour
         AmmoCount.text = ammo.ToString();
         TotalAmmo.text = totalAmmo.ToString();
         HealthBar.value = healthPercent;
+
+        //Interact update
+        if (interactInProgress)
+        {;
+            t += Time.deltaTime;
+            float fill = t / time;
+            Interact.fillAmount = fill;
+            if (t >= time)
+            {
+                interactInProgress = false;
+                Interact.fillAmount = 0;
+            }
+        }
+    }
+
+    public void startInteractTimer(float time)
+    {
+        interactInProgress = true;
+        t = 0;
+        this.time = time;
+    }
+
+    public void stopInteractTimer()
+    {
+        interactInProgress = false;
+        Interact.fillAmount = 0;
     }
 }
