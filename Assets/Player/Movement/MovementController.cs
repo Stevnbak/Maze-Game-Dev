@@ -91,7 +91,6 @@ public class MovementController : MonoBehaviour
 
     void Looking()
     {
-       
         //Horizontal look
         float xLook = mouseVec.x * 0.022f * sensitivity;
         //Debug.Log("Delta X: " + mouseVec.x + "Rotation X: " + xLook);
@@ -103,7 +102,7 @@ public class MovementController : MonoBehaviour
 
         float yLook = mouseVec.y * 0.0011f * sensitivity;
         //Debug.Log("Delta Y: " + mouseVec.y + "Rotation Y: " + yLook);
-        lookingAt.Translate(new Vector3(0, yLook * lookingAt.position.z, 0));
+        lookingAt.Translate(new Vector3(0, yLook * Mathf.Abs(lookingAt.position.z), 0));
 
         //Max height looking at can be
         

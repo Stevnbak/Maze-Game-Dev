@@ -86,11 +86,13 @@ public class Weapon_AR : MonoBehaviour, IWeapon
     public void Fire()
     {
         //Visuals
-        //shootingSytem.Play();
+        //shootingSystem.Play();
 
         //Ammo
         if (ammoInMag == 0) return;
         ammoInMag -= 1;
+
+        PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
 
         //RayCast Hit:
         int layerMask = 1 << 6;
@@ -98,18 +100,17 @@ public class Weapon_AR : MonoBehaviour, IWeapon
         Vector3 direction = GetDirection();
 
         RaycastHit hit;
-        if (Physics.Raycast(bulletPoint.position, direction, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(Camera.main.transform.position, direction, out hit, Mathf.Infinity, layerMask))
         {
-            Debug.DrawRay(bulletPoint.position, direction * hit.distance, Color.red);
             GameObject hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Wall"))
+            if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
             {
-                //Debug.Log("Hit the maze");
+                Debug.Log("Hit the maze");
             }
 
             if (hitObject.CompareTag("Creature"))
             {
-                //Debug.Log("Hit a creature");
+                Debug.Log("Hit a creature");
                 hitObject.GetComponent<ICreature>().TakeDamage(damage);
             }
             TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
@@ -118,14 +119,14 @@ public class Weapon_AR : MonoBehaviour, IWeapon
         else
         {
             Debug.DrawRay(bulletPoint.position, direction * 1000, Color.white);
-            //Debug.Log("Hit nothing");
+            Debug.Log("Hit nothing");
             TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
         }
     }
     Vector3 GetDirection()
     {
-        Vector3 direction = transform.TransformDirection(Vector3.forward);
+        Vector3 direction = Camera.main.transform.forward;
         if(addBulletSpread)
         {
             direction += new Vector3(
@@ -135,11 +136,13 @@ public class Weapon_AR : MonoBehaviour, IWeapon
             );
             direction.Normalize();
         }
+        Debug.Log(direction);
         return direction;
     }
 
     IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
     {
+        trail.time *= hit.distance;
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 

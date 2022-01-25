@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawning : MonoBehaviour
 {
     [Header("Spawning Prefabs")]
+    public GameObject extractionObject;
     public GameObject pickupObjective;
     public GameObject locationObjective;
     public GameObject explosiveTrap;
@@ -12,16 +13,11 @@ public class Spawning : MonoBehaviour
     public GameObject basicEnemy;
 
     [Header("Other")]
-    public int difficulty;
     public Transform parent;
-    int mazeSize;
 
 
-    public void Spawn()
+    public void Spawn(int difficulty, int mazeSize)
     {
-        mazeSize = GetComponent<MazeGenerator>().size;
-        Debug.Log(mazeSize);
-
         //Objectives:
         for (int i = 0; i < 5 * difficulty; i++)
         {
@@ -45,7 +41,6 @@ public class Spawning : MonoBehaviour
 
             Instantiate(objSpawn, position, Quaternion.identity, parent);
         }
-
         //Traps
         for (int i = 0; i < 7 * difficulty; i++)
         {
@@ -80,20 +75,26 @@ public class Spawning : MonoBehaviour
                 }
             }
         }
-
-
         //Creatures
-        /*for (int i = 0; i < 10 * difficulty; i++)
+        for (int i = 0; i < 3 * difficulty; i++)
         {
-            int r = Random.Range(1, 3);
-            int x = Random.Range(0, mazeSize);
-            if (x > mazeSize / 3 && x < mazeSize / 3 * 2) x = mazeSize / 3 * r;
-            r = Random.Range(1, 3);
-            int y = Random.Range(0, mazeSize);
-            if (y > mazeSize / 3 && y < mazeSize / 3 * 2) y = mazeSize / 3 * r;
-            Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+            spawnCreature(mazeSize);
+        }
 
-            Instantiate(basicEnemy, position, Quaternion.identity, parent);
-        }*/
+        //Extraction
+        Vector3 extractPosition = new Vector3(0, 2, 0);
+        Instantiate(extractionObject, extractPosition, Quaternion.identity, parent);
+    }
+
+    public void spawnCreature(int mazeSize)
+    {
+        int r = Random.Range(1, 3);
+        int x = Random.Range(0, mazeSize);
+        if (x > mazeSize / 3 && x < mazeSize / 3 * 2) x = mazeSize / 3 * r;
+        r = Random.Range(1, 3);
+        int y = Random.Range(0, mazeSize);
+        if (y > mazeSize / 3 && y < mazeSize / 3 * 2) y = mazeSize / 3 * r;
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Instantiate(basicEnemy, position, Quaternion.identity, parent);
     }
 }

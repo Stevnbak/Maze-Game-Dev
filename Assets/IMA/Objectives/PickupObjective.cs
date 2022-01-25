@@ -6,7 +6,7 @@ public class PickupObjective : MonoBehaviour, IInteractable
 {
     public float setTime;
     public float time { get; set; }
-    public string name;
+    public string objectiveName;
     
     void Update()
     {
@@ -15,7 +15,7 @@ public class PickupObjective : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective(name);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective(objectiveName);
         Destroy(gameObject);
     }
 }

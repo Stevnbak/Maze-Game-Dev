@@ -24,6 +24,7 @@ public class ObjectiveCounter : MonoBehaviour
 
     private void Update()
     {
+        gameController.objectivesTotal = objectives.Length;
         foreach (var entry in objectives)
         {
             if(entry.count >= entry.goal && !entry.completed)

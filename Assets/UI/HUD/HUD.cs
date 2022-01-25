@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     public Image Crosshair;
     public Slider HealthBar;
     public Image Interact;
+    public GameObject Objectives;
 
     [Header("Info")]
     GameObject player;
@@ -21,7 +22,9 @@ public class HUD : MonoBehaviour
     public float ammo;
     public float totalAmmo;
     public bool interactInProgress;
+    public bool showingObjectiveScreen = false;
     float t, time;
+    public float mapTime = 0;
 
     void Start()
     {
@@ -44,6 +47,9 @@ public class HUD : MonoBehaviour
         TotalAmmo.text = totalAmmo.ToString();
         HealthBar.value = healthPercent;
 
+        //Show ojbective screen?
+        Objectives.SetActive(showingObjectiveScreen);
+
         //Interact update
         if (interactInProgress)
         {;
@@ -55,6 +61,12 @@ public class HUD : MonoBehaviour
                 interactInProgress = false;
                 Interact.fillAmount = 0;
             }
+        }
+
+        //Map time
+        if(GameObject.Find("Map").transform.GetChild(0).gameObject.activeSelf)
+        {
+            mapTime += Time.deltaTime;
         }
     }
 

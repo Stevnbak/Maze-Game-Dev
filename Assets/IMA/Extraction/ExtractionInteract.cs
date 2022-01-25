@@ -14,7 +14,9 @@ public class ExtractionInteract : MonoBehaviour, IInteractable
     public void interact()
     {
         IGameController gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IGameController>();
-        gameController.isGameRunning = false;
-        //Switch to end game scene
+        if (gameController.extractionReady) {
+            PlayerPrefs.SetString("state", "win");
+            gameController.EndGame(); 
+        }
     }
 }

@@ -76,6 +76,30 @@
                     "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Map",
+                    "type": "Value",
+                    "id": "a4a1caf9-2609-44ff-9613-2e5b5b85467c",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Show_Objectives",
+                    "type": "Value",
+                    "id": "517eb102-0b2d-45ed-ad53-12b85e4acf7a",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Value",
+                    "id": "6a61178d-7dfd-49ea-9a03-08482443d1d4",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -230,6 +254,66 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "328e9492-1db7-4c92-b7e6-acc348404467",
+                    "path": "Keyboard/Tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58e850a0-6ce1-4cf0-a277-62433f337db1",
+                    "path": "Keyboard/T",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Show_Objectives",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4301ddc-3144-4070-a07c-0935caf6e3c6",
+                    "path": "Keyboard/Escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "30b5aae5-a1e3-492a-97c4-43c162d8dfa8",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Value",
+                    "id": "e02c86b3-9a58-4be8-8cc4-c7000b807346",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8880f107-67a0-4e4e-83dc-4fa562254ce6",
+                    "path": "Keyboard/Escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LocationObjective : MonoBehaviour
 {
-    public string name;
+    public string objectiveName;
     public float distance;
     Transform player;
 
@@ -19,7 +19,7 @@ public class LocationObjective : MonoBehaviour
 
     public void complete()
     {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective(name);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective(objectiveName);
         Destroy(gameObject);
     }
 }

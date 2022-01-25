@@ -1,53 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class Player_Input_Manager : MonoBehaviour
 {
     MovementController movementController;
+    IGameController gameController;
     IWeapon weaponManager;
     bool interacting;
     IInteractable interactable;
     Transform interactTrans;
     public float maxInteractDistance;
     float t;
+    HUD hud;
 
     private void Start()
     {
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IGameController>();
+        hud = GameObject.Find("GameController").GetComponent<HUD>();
         movementController = GetComponent<MovementController>();
         weaponManager = GetComponentInChildren<IWeapon>();
         weaponManager.Initialize();
+        Cursor.visible = false;
     }
 
     //Movement
     public void OnMove(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         movementController.inputVec = input.Get<Vector2>();
         movementController.inputVec.x *= movementController.strafeMultiplier;
     }
     public void OnLook(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         movementController.mouseVec = input.Get<Vector2>();
     }
     public void OnSprint(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 0) movementController.isSprinting = false;
         if (input.Get<float>() == 1) movementController.isSprinting = true;
     }
     public void OnCrouch(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 0) movementController.isCrouching = false;
         if (input.Get<float>() == 1) movementController.isCrouching = true;
     }
     public void OnJump(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1) movementController.Jump();
     }
 
     //Weapon
     void OnFire(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
             weaponManager.Fire();
@@ -64,6 +76,7 @@ public class Player_Input_Manager : MonoBehaviour
 
     void OnReload(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
             weaponManager.isReloading = true;
@@ -75,6 +88,7 @@ public class Player_Input_Manager : MonoBehaviour
 
     void OnADS(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
             weaponManager.isReloading = false;
@@ -89,6 +103,7 @@ public class Player_Input_Manager : MonoBehaviour
     //Interact
     void OnInteraction(InputValue input)
     {
+        if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
             int layerMask = 1 << 6;
@@ -120,12 +135,46 @@ public class Player_Input_Manager : MonoBehaviour
         }
     }
 
+    //Other
+    void OnMap(InputValue input)
+    {
+        if (!gameController.isGameRunning) return;
+        if (input.Get<float>() == 1)
+        {
+            GameObject.Find("Map").transform.GetChild(0).gameObject.SetActive(true);
+        } else
+        {
+            GameObject.Find("Map").transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    void OnShow_Objectives(InputValue input)
+    {
+        if (!gameController.isGameRunning) return;
+            if (input.Get<float>() == 1)
+        {
+            hud.showingObjectiveScreen = true;
+        }
+        else
+        {
+            hud.showingObjectiveScreen = false;
+        }
+    }
+
+    private void OnPause(InputValue input)
+    {
+        if (input.Get<float>() == 1)
+        {
+            GameObject.Find("GameController").GetComponent<PauseScreen>().Trigger();
+        }
+    }
+
     void Update()
     {
         if (interacting)
         {
             if (t == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(interactable.time);
-            t += Time.deltaTime;
+            if (gameController.isGameRunning) t += Time.deltaTime;
             if (t >= interactable.time)
             {
                 interactable.interact();
@@ -138,7 +187,13 @@ public class Player_Input_Manager : MonoBehaviour
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().stopInteractTimer();
                 t = 0;
             }
-        } 
+        }
+
+        if (!gameController.isGameRunning)
+        {
+            movementController.inputVec = Vector3.zero;
+            movementController.mouseVec = Vector3.zero;
+        }
     }
 }
 

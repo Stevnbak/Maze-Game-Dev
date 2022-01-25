@@ -11,6 +11,7 @@ TagManager:
   - Creature
   - Item
   - Trap
+  - MapOverlay
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Bullet
   - Creature
   - Weapon
-  - 
-  - 
+  - Wall
+  - Map
   - 
   - 
   - 
