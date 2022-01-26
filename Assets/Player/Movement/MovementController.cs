@@ -97,18 +97,12 @@ public class MovementController : MonoBehaviour
         transform.Rotate(0, xLook, 0);
 
         //Vertical look
-        Transform lookingAt = transform.Find("LookingAt");
-        float maxHeight = Mathf.Tan(maxVerticalAngle * Mathf.PI / 180) * lookingAt.localPosition.z;
-
-        float yLook = mouseVec.y * 0.0011f * sensitivity;
+        Transform rotObj = transform.Find("VerticalRotation");
+        float yLook = mouseVec.y * 0.022f * -sensitivity;
         //Debug.Log("Delta Y: " + mouseVec.y + "Rotation Y: " + yLook);
-        lookingAt.Translate(new Vector3(0, yLook * Mathf.Abs(lookingAt.position.z), 0));
-
-        //Max height looking at can be
-        
-        //Debug.Log("Max looking at height: " + maxHeight);
-        float height = Mathf.Clamp(lookingAt.localPosition.y, -maxHeight, maxHeight);
-        lookingAt.localPosition = new Vector3(lookingAt.localPosition.x, height, lookingAt.localPosition.z);
+        rotObj.Rotate(new Vector3(yLook, 0, 0));
+        if (rotObj.localEulerAngles.x < 360-maxVerticalAngle && rotObj.localEulerAngles.x > 180) rotObj.localEulerAngles = new Vector3(-maxVerticalAngle, rotObj.localEulerAngles.y, rotObj.localEulerAngles.z);
+        if (rotObj.localEulerAngles.x > maxVerticalAngle && rotObj.localEulerAngles.x < 180) rotObj.localEulerAngles = new Vector3(maxVerticalAngle, rotObj.localEulerAngles.y, rotObj.localEulerAngles.z);
     }
 
     public void Jump()

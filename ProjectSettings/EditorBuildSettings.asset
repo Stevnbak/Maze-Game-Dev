@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScreen.unity
     guid: cecbb2fea37bf6a48823e601932aa7d2
+  - enabled: 1
+    path: Assets/Scenes/MenuBackground.unity
+    guid: c96dde2f5580f1b42b761fd89eaf896d
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 560e1cb4055a88640a967d180fe1113b, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 2035887e2521947409fd676a5aa79075, type: 2}

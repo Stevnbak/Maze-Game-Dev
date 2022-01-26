@@ -191,8 +191,15 @@ public class Player_Input_Manager : MonoBehaviour
 
         if (!gameController.isGameRunning)
         {
-            movementController.inputVec = Vector3.zero;
-            movementController.mouseVec = Vector3.zero;
+            InputSystem.Update();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (gameController.isGameRunning)
+        {
+            InputSystem.Update();
         }
     }
 }

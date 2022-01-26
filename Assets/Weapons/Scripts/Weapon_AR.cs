@@ -15,10 +15,13 @@ public class Weapon_AR : MonoBehaviour, IWeapon
     [Header("Shooting")]
     public bool addBulletSpread = true;
     public Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
-    public ParticleSystem shootingSytem;
     public Transform bulletPoint;
-    public TrailRenderer bulletTrail;
+    
 
+    [Header("Visuals")]
+    public TrailRenderer bulletTrail;
+    public ParticleSystem shootingSystem;
+    public ParticleSystem hitSystem;
 
     //Bools
     public bool isFiring { get; set; }
@@ -51,6 +54,8 @@ public class Weapon_AR : MonoBehaviour, IWeapon
         //Aim gun
         transform.LookAt(lookingAt);
 
+        //Stop vfx when not shooting
+        if(!isFiring) shootingSystem.Stop();
         //Fire
         if (isFiring) {
             fireTime += Time.deltaTime;
@@ -85,24 +90,26 @@ public class Weapon_AR : MonoBehaviour, IWeapon
 
     public void Fire()
     {
-        //Visuals
-        //shootingSystem.Play();
-
         //Ammo
-        if (ammoInMag == 0) return;
+        if (ammoInMag == 0) {
+            isFiring = false;
+            return; 
+        }
+        //Visuals
+        if (!shootingSystem.isPlaying) shootingSystem.Play();
         ammoInMag -= 1;
 
         PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
 
         //RayCast Hit:
-        int layerMask = 1 << 6;
-        layerMask = ~layerMask;
+        int layerMask = LayerMask.GetMask("World", "Creature", "Wall");
         Vector3 direction = GetDirection();
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, direction, out hit, Mathf.Infinity, layerMask))
         {
             GameObject hitObject = hit.transform.gameObject;
+            Debug.Log(hitObject);
             if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
             {
                 Debug.Log("Hit the maze");
@@ -115,10 +122,11 @@ public class Weapon_AR : MonoBehaviour, IWeapon
             }
             TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
+            Debug.DrawRay(bulletPoint.position, hit.point, Color.green);
         }
         else
         {
-            Debug.DrawRay(bulletPoint.position, direction * 1000, Color.white);
+            Debug.DrawRay(bulletPoint.position, direction * 1000, Color.red);
             Debug.Log("Hit nothing");
             TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
@@ -136,7 +144,6 @@ public class Weapon_AR : MonoBehaviour, IWeapon
             );
             direction.Normalize();
         }
-        Debug.Log(direction);
         return direction;
     }
 
@@ -154,9 +161,11 @@ public class Weapon_AR : MonoBehaviour, IWeapon
             yield return null;
         }
         trail.transform.position = hit.point;
-        //Trail hit
-        //Stop animation
         Destroy(trail.gameObject, trail.time);
+        GameObject hitParticle = Instantiate(hitSystem.gameObject);
+        //GameObject hitParticle = hitSystem.gameObject;
+        hitParticle.transform.position = hit.point;
+        hitParticle.GetComponent<ParticleSystem>().Play();
     }
 }
 

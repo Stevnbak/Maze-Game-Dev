@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Stevnbak
-  productName: CoopMaze
+  productName: MazeGame
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -135,7 +135,8 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -153,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.Stevnbak.CoopMaze
+    Standalone: com.Stevnbak.MazeGame
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -688,7 +689,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Analytics: 0
+    Analytics: 1
     Build: 0
     Collab: 0
     Game Performance: 0
@@ -712,7 +713,7 @@ PlayerSettings:
   cloudProjectId: 39c03f46-1845-4774-b607-c31771bf79d3
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Maze-Coop
+  projectName: MazeGame
   organizationId: ztigerian-games
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
