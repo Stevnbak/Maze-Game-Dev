@@ -21,9 +21,14 @@ public class Player_Input_Manager : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IGameController>();
         hud = GameObject.Find("GameController").GetComponent<HUD>();
         movementController = GetComponent<MovementController>();
-        weaponManager = GetComponentInChildren<IWeapon>();
+        weaponManager = transform.GetChild(0).GetComponentInChildren<IWeapon>();
         weaponManager.Initialize();
         Cursor.visible = false;
+    }
+
+    public void updateWeapon(IWeapon newWeapon)
+    {
+        weaponManager = newWeapon;
     }
 
     //Movement

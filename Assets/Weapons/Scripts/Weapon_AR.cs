@@ -31,18 +31,20 @@ public class Weapon_AR : MonoBehaviour, IWeapon
 
     float reloadTimer;
 
+    void Start()
+    {
+        ammoTotal = setAmmoTotal;
+    }
+
     public void Initialize()
     {
+        this.enabled = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Input_Manager>().updateWeapon(this);
+        lookingAt = GameObject.Find("LookingAt").transform;
         isFiring = false;
         isReloading = false;
         isADSing = false;
         fireTime = 0;
-    }
-
-    void Start()
-    {
-        //Update total ammo from editor
-        ammoTotal = setAmmoTotal;
         Reload();
     }
 
@@ -166,6 +168,17 @@ public class Weapon_AR : MonoBehaviour, IWeapon
         //GameObject hitParticle = hitSystem.gameObject;
         hitParticle.transform.position = hit.point;
         hitParticle.GetComponent<ParticleSystem>().Play();
+    }
+
+    public void Drop(Transform otherTrans)
+    {
+        transform.parent = otherTrans.parent;
+        transform.position = otherTrans.position;
+        transform.rotation = otherTrans.rotation;
+        GetComponent<WeaponItem>().SetLayerRecursively(gameObject, 3);
+        gameObject.tag = "Item";
+        GetComponent<WeaponItem>().vfx.Play();
+        this.enabled = false;
     }
 }
 

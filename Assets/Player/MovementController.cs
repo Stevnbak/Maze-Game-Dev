@@ -20,8 +20,14 @@ public class MovementController : MonoBehaviour
     public bool isSprinting = false;
     public bool isCrouching = false, isGrounded;
 
+    [Header("Status Effects")]
+    float effectTime = 0;
+    public float speedBoostTime;
+    public float speedBoostEffect;
+
     void Start()
     {
+        sensitivity = PlayerPrefs.GetFloat("sensitivity");
         Cursor.lockState = CursorLockMode.Confined;
         maxSpeed = walkSpeed;
         Physics.gravity = new Vector3(0,-gravity,0);
@@ -34,6 +40,17 @@ public class MovementController : MonoBehaviour
         if (isSprinting) maxSpeed = sprintSpeed;
         if (isCrouching) maxSpeed = crouchSpeed;
         if (!isSprinting && !isCrouching) maxSpeed = walkSpeed;
+        //Effects
+        if (speedBoostTime != 0)
+        {
+            effectTime += Time.deltaTime;
+            maxSpeed += speedBoostEffect;
+            if(effectTime > speedBoostTime)
+            {
+                speedBoostEffect = 0;
+                speedBoostTime = 0;
+            }
+        }
 
         //Deadzone
         float x = mouseVec.x;
@@ -73,6 +90,12 @@ public class MovementController : MonoBehaviour
 
         //Looking around
         Looking();
+    }
+
+    //Update sensitivity
+    public void sensUpdate()
+    {
+        sensitivity = PlayerPrefs.GetFloat("sensitivity");
     }
 
     void Movement()

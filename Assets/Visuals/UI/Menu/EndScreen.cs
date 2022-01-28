@@ -22,13 +22,17 @@ public class EndScreen : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
         SceneManager.LoadSceneAsync("MenuBackground", LoadSceneMode.Additive);
         if (PlayerPrefs.GetString("state") == "win") winState.SetActive(true); else loseState.SetActive(true);
         //Time
         float time = PlayerPrefs.GetFloat("time");
         float bestTime = PlayerPrefs.GetFloat("bestTime", 0);
-        if (PlayerPrefs.GetString("state") == "win") if (time < bestTime) bestTime = time;
-        if (PlayerPrefs.GetString("state") == "win") PlayerPrefs.SetFloat("bestTime", bestTime);
+        if (PlayerPrefs.GetString("state") == "win")
+        {
+            if (time < bestTime) bestTime = time;
+            PlayerPrefs.SetFloat("bestTime", bestTime);
+        }
         float minutes = Mathf.Floor(time / 60);
         float seconds = time - (minutes * 60);
         timeText.text = minutes + " minutes and " + seconds + " seconds";

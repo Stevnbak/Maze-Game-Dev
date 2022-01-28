@@ -9,6 +9,7 @@ public class PlayerInfo : MonoBehaviour
     
     void Update()
     {
+        health = Mathf.Clamp(health, 0, maxHealth);
         if(health <= 0)
         {
             PlayerPrefs.SetString("state", "lose");

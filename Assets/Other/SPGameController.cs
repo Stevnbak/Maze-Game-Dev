@@ -11,8 +11,12 @@ public class SPGameController : MonoBehaviour, IGameController
     public bool isGameRunning { get; set; }
     public int difficulty;
     public bool extractionReady { get; set; }
-    public float spawningInterval;
-    float lastSpawn;
+
+    [Header("Spawning")]
+    public float enemySpawningInterval;
+    public float itemSpawningInterval;
+    float enemyLastSpawn;
+    float itemLastSpawn;
     void Start()
     {
         difficulty = PlayerPrefs.GetInt("difficulty");
@@ -33,10 +37,15 @@ public class SPGameController : MonoBehaviour, IGameController
         if (!isGameRunning) return;
         time += Time.deltaTime;
         if (objectivesCompleted == objectivesTotal) extractionReady = true; else extractionReady = false;
-        if(time > lastSpawn + spawningInterval / difficulty)
+        if(time > enemyLastSpawn + enemySpawningInterval / difficulty)
         {
-            lastSpawn = time;
+            enemyLastSpawn = time;
             GetComponent<Spawning>().spawnCreature(GetComponent<MazeGenerator>().size);
+        }
+        if (time > enemyLastSpawn + itemSpawningInterval / difficulty)
+        {
+            itemLastSpawn = time;
+            GetComponent<Spawning>().spawnItem(GetComponent<MazeGenerator>().size);
         }
     }
 
