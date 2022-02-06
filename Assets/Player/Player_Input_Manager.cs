@@ -67,7 +67,6 @@ public class Player_Input_Manager : MonoBehaviour
         if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
-            weaponManager.Fire();
             weaponManager.isFiring = true;
             weaponManager.isReloading = false;
             interacting = false;
@@ -75,7 +74,6 @@ public class Player_Input_Manager : MonoBehaviour
         else
         {
             weaponManager.isFiring = false;
-            weaponManager.fireTime = 0;
         }
     }
 
@@ -120,7 +118,7 @@ public class Player_Input_Manager : MonoBehaviour
             {
                 Debug.DrawRay(Camera.main.transform.position, direction * hit.distance, Color.blue);
                 GameObject hitObject = hit.transform.gameObject;
-                if (hitObject.CompareTag("Item"))
+                if (hitObject.GetComponent<IInteractable>() != null)
                 {
                     t = 0;
                     interactable = hitObject.GetComponent<IInteractable>();

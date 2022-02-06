@@ -7,6 +7,7 @@ public class Spawning : MonoBehaviour
     [Header("Objectives")]
     public GameObject extractionObject;
     public GameObject pickupObjective;
+    public GameObject machine;
 
     [Header("Challenges")]
     public GameObject explosiveTrap;
@@ -14,16 +15,16 @@ public class Spawning : MonoBehaviour
     public GameObject basicEnemy;
 
     [Header("Items")]
-    public GameObject healthItem;
-    public GameObject ammoItem;
-    public GameObject speedItem;
+    public GameObject[] weapons;
+    public GameObject[] items;
 
     [Header("Other")]
     public Transform parent;
-
+    int mazeSize;
 
     public void Spawn(int difficulty, int mazeSize)
     {
+        this.mazeSize = mazeSize;
         //Pickup Objectives:
         for (int i = 0; i < 5 * difficulty; i++)
         {
@@ -42,6 +43,13 @@ public class Spawning : MonoBehaviour
 
             Instantiate(objSpawn, position, Quaternion.identity, parent);
         }
+        //Machine objectives
+        for (int i = 0; i < 1 * difficulty; i++)
+        {
+            GetComponent<ObjectiveCounter>().addObjective("machine");
+            spawnMachine();
+        }
+
         //Traps
         for (int i = 0; i < 7 * difficulty; i++)
         {
@@ -79,12 +87,17 @@ public class Spawning : MonoBehaviour
         //Creatures
         for (int i = 0; i < 3 * difficulty; i++)
         {
-            spawnCreature(mazeSize);
+            spawnCreature();
         }
         //Item
         for (int i = 0; i < 2 * difficulty; i++)
         {
-            spawnItem(mazeSize);
+            spawnItem();
+        }
+        //Item
+        for (int i = 0; i < 1 * difficulty; i++)
+        {
+            spawnWeapon();
         }
 
         //Extraction
@@ -92,7 +105,7 @@ public class Spawning : MonoBehaviour
         Instantiate(extractionObject, extractPosition, Quaternion.identity, parent);
     }
 
-    public void spawnCreature(int mazeSize)
+    public void spawnCreature()
     {
         int r = Random.Range(1, 3);
         int x = Random.Range(0, mazeSize);
@@ -104,20 +117,35 @@ public class Spawning : MonoBehaviour
         Instantiate(basicEnemy, position, Quaternion.identity, parent);
     }
 
-    public void spawnItem(int mazeSize)
+    public void spawnWeapon()
     {
-        int r = Random.Range(0, 3);
-        GameObject itemPrefab;
-        if (r == 0) itemPrefab = healthItem;
-        else if (r == 1) itemPrefab = ammoItem;
-        else itemPrefab = speedItem;
-        r = Random.Range(1, 3);
+        int r = Random.Range(0, weapons.Length);
+        GameObject weaponPrefab = weapons[r];
+        int x = Random.Range(0, mazeSize);
+        int y = Random.Range(0, mazeSize);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Instantiate(weaponPrefab, position, Quaternion.identity, parent);
+    }
+
+    public void spawnItem()
+    {
+        int r = Random.Range(0, items.Length);
+        GameObject itemPrefab = items[r];
+        int x = Random.Range(0, mazeSize);
+        int y = Random.Range(0, mazeSize);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Instantiate(itemPrefab, position, Quaternion.identity, parent);
+    }
+
+    public void spawnMachine()
+    {
+        int r = Random.Range(1, 3);
         int x = Random.Range(0, mazeSize);
         if (x > mazeSize / 3 && x < mazeSize / 3 * 2) x = mazeSize / 3 * r;
         r = Random.Range(1, 3);
         int y = Random.Range(0, mazeSize);
         if (y > mazeSize / 3 && y < mazeSize / 3 * 2) y = mazeSize / 3 * r;
-        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
-        Instantiate(itemPrefab, position, Quaternion.identity, parent);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, -0.3f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Instantiate(machine, position, Quaternion.identity, parent);
     }
 }

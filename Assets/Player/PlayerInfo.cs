@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+public class PlayerInfo : MonoBehaviour, ICreature
 {
-    public float health;
+    public float health { get; set; }
     public float maxHealth;
     
+    void Start()
+    {
+        health = maxHealth;
+    }
+
     void Update()
     {
         health = Mathf.Clamp(health, 0, maxHealth);

@@ -33,7 +33,7 @@ public class ObjectiveHud : MonoBehaviour
         GameObject uiItem = Instantiate(uiTemplate, parent);
         ObjectiveHUDElement script = uiItem.GetComponent<ObjectiveHUDElement>();
         uiElements.Add(script);
-        uiItem.transform.localPosition = new Vector3(0, 125 - (index * 90), 0);
+        uiItem.transform.localPosition = new Vector3(0, 270 - (index * 110), 0);
         script.objName = objectiveList[index].name;
         script.count = objectiveList[index].count;
         script.goal = objectiveList[index].goal;

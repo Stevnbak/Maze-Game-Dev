@@ -14,8 +14,12 @@ public class HUD : MonoBehaviour
     public Slider HealthBar;
     public Image Interact;
     public GameObject Objectives;
+    public TextMeshProUGUI objPopupTitle;
+    public TextMeshProUGUI objPopupSub;
 
     [Header("Info")]
+    public float popupTime;
+    float lastPopup;
     GameObject player;
     public float health;
     public float maxHealth;
@@ -25,9 +29,11 @@ public class HUD : MonoBehaviour
     public bool showingObjectiveScreen = false;
     float t, time;
     public float mapTime = 0;
+    IGameController gameController;
 
     void Start()
     {
+        gameController = GetComponent<IGameController>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -49,6 +55,9 @@ public class HUD : MonoBehaviour
 
         //Show ojbective screen?
         Objectives.SetActive(showingObjectiveScreen);
+
+        //Objective popup
+        if(gameController.time > lastPopup + popupTime) objPopupTitle.transform.parent.gameObject.SetActive(false);
 
         //Interact update
         if (interactInProgress)
@@ -81,5 +90,13 @@ public class HUD : MonoBehaviour
     {
         interactInProgress = false;
         Interact.fillAmount = 0;
+    }
+
+    public void ObjectivePopup(string name, float count, float goal)
+    {
+        lastPopup = gameController.time;
+        objPopupTitle.text = name;
+        objPopupSub.text = "Progress: " + count + "/" + goal + "\n(" + count / goal * 100 + "%)";
+        objPopupTitle.transform.parent.gameObject.SetActive(true);
     }
 }

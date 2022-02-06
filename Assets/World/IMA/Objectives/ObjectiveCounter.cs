@@ -44,6 +44,7 @@ public class ObjectiveCounter : MonoBehaviour
             {
                 entry.count += 1;
                 foundObjective = true;
+                GetComponent<HUD>().ObjectivePopup(entry.name, entry.count, entry.goal);
             }
         }
         if (!foundObjective) Debug.LogError("Objective named " + type + " wasn't found");

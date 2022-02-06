@@ -15,8 +15,10 @@ public class SPGameController : MonoBehaviour, IGameController
     [Header("Spawning")]
     public float enemySpawningInterval;
     public float itemSpawningInterval;
+    public float weaponSpawningInterval;
     float enemyLastSpawn;
     float itemLastSpawn;
+    float weaponLastSpawn;
     void Start()
     {
         difficulty = PlayerPrefs.GetInt("difficulty");
@@ -28,6 +30,8 @@ public class SPGameController : MonoBehaviour, IGameController
         GetComponent<MazeGenerator>().GenerateMaze(difficulty);
         GetComponent<Spawning>().Spawn(difficulty, GetComponent<MazeGenerator>().size);
         for(int i = 0; i < 5 * difficulty; i++) GetComponent<ObjectiveCounter>().addObjective("creature");
+        //NavMeshBuilder.ClearAllNavMeshes();
+        //NavMeshBuilder.BuildNavMesh();
         objectivesCompleted = 0;
         isGameRunning = true;
     }
@@ -40,12 +44,17 @@ public class SPGameController : MonoBehaviour, IGameController
         if(time > enemyLastSpawn + enemySpawningInterval / difficulty)
         {
             enemyLastSpawn = time;
-            GetComponent<Spawning>().spawnCreature(GetComponent<MazeGenerator>().size);
+            GetComponent<Spawning>().spawnCreature();
         }
-        if (time > enemyLastSpawn + itemSpawningInterval / difficulty)
+        if (time > itemLastSpawn + itemSpawningInterval / difficulty)
         {
             itemLastSpawn = time;
-            GetComponent<Spawning>().spawnItem(GetComponent<MazeGenerator>().size);
+            GetComponent<Spawning>().spawnItem();
+        }
+        if (time > weaponLastSpawn + weaponSpawningInterval / difficulty)
+        {
+            weaponLastSpawn = time;
+            GetComponent<Spawning>().spawnWeapon();
         }
     }
 
