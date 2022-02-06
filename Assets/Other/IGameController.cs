@@ -6,6 +6,7 @@ public interface IGameController
     float objectivesTotal { get; set; }
     float time { get; set; }
     bool isGameRunning { get; set; }
+    bool extractionReady { get; set; }
     void StartGame();
     void EndGame();
 }

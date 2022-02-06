@@ -10,4 +10,6 @@ public interface IWeapon
     float ammoTotal { get; set; }
 
     void Fire();
+
+    void Drop(Transform otherTrans);
 }
