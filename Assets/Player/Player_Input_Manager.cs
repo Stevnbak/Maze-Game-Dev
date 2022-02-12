@@ -21,7 +21,7 @@ public class Player_Input_Manager : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IGameController>();
         hud = GameObject.Find("GameController").GetComponent<HUD>();
         movementController = GetComponent<MovementController>();
-        weaponManager = transform.GetChild(0).GetComponentInChildren<IWeapon>();
+        weaponManager = transform.Find("Weapon_Pos").GetComponentInChildren<IWeapon>();
         weaponManager.Initialize();
         Cursor.visible = false;
     }
@@ -58,7 +58,7 @@ public class Player_Input_Manager : MonoBehaviour
     public void OnJump(InputValue input)
     {
         if (!gameController.isGameRunning) return;
-        if (input.Get<float>() == 1) movementController.Jump();
+        //if (input.Get<float>() == 1) movementController.Jump();
     }
 
     //Weapon
@@ -94,11 +94,13 @@ public class Player_Input_Manager : MonoBehaviour
         if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1)
         {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<CameraController>().switchToADS = true;
             weaponManager.isReloading = false;
             weaponManager.isADSing = true;
             interacting = false;
         } else
         {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<CameraController>().switchToFPS = true;
             weaponManager.isADSing = false;
         }
     }

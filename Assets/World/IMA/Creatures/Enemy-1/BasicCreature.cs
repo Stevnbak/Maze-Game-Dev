@@ -145,6 +145,7 @@ public class BasicCreature : MonoBehaviour, ICreature
         GameObject vfxObj = Instantiate(deathVFX.gameObject);
         vfxObj.transform.position = transform.position;
         vfxObj.GetComponent<ParticleSystem>().Play();
+        vfxObj.GetComponent<AudioSource>().Play();
         Destroy(gameObject);
     }
 

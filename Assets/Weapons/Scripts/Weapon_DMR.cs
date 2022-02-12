@@ -16,18 +16,21 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
     public Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
     public Transform bulletPoint;
 
-
     [Header("Visuals")]
     public ParticleSystem shootingSystem;
     public ParticleSystem hitSystem;
 
-    //Bools
+    [Header("Audio")]
+    public AudioSource shootSound;
+    public AudioSource reloadSound;
+
+    [Header("Other")]
+    float reloadTimer;
     public bool isFiring { get; set; }
     public bool isReloading { get; set; }
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
 
-    float reloadTimer;
 
     void Start()
     {
@@ -58,6 +61,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         fireTime += Time.deltaTime;
         if (isFiring)
         {
+            isFiring = false;
             if (fireTime >= firerate)
             {
                 fireTime = 0;
@@ -65,13 +69,28 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
             }
         }
 
+        //ADS
+        if (isADSing)
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.parent.Find("ADS_Weapon_Pos").position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        } else
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        }
 
+        //VFX item stop
         GetComponent<WeaponItem>().vfx.Stop();
 
         //Reload
         if (isReloading)
         {
-            if (reloadTimer == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+            if (reloadTimer == 0)
+            {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+                reloadSound.Play();
+            }
             reloadTimer += Time.deltaTime;
             if (reloadTimer >= reloadTime) Reload();
         }
@@ -105,6 +124,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         ammoInMag -= 1;
 
         PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
+        shootSound.Play();
 
         //RayCast Hit:
         int layerMask = LayerMask.GetMask("World", "Creature", "Wall");

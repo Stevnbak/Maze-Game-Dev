@@ -7,13 +7,12 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 {
     [Header("Stats")]
     public float damage;
-    public float firerate, setAmmoTotal, ammoMagTotal, reloadTime;
+    public float firerate, setAmmoTotal, ammoMagTotal, reloadTime, bulletsPerShot;
     public float ammoInMag { get; set; }
     public float ammoTotal { get; set; }
     public Transform lookingAt;
 
     [Header("Shooting")]
-    public bool addBulletSpread = true;
     public Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
     public Transform bulletPoint;
 
@@ -23,13 +22,16 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
     public ParticleSystem shootingSystem;
     public ParticleSystem hitSystem;
 
-    //Bools
+    [Header("Audio")]
+    public AudioSource shootSound;
+    public AudioSource reloadSound;
+
+    [Header("Other")]
+    float reloadTimer;
     public bool isFiring { get; set; }
     public bool isReloading { get; set; }
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
-
-    float reloadTimer;
 
     void Start()
     {
@@ -56,24 +58,40 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
         //Aim gun
         transform.LookAt(lookingAt);
 
-        //Stop vfx when not shooting
-        if (!isFiring) shootingSystem.Stop();
+        fireTime += Time.deltaTime;
+
+        GetComponent<WeaponItem>().vfx.Stop();
+
         //Fire
         if (isFiring)
         {
-            fireTime += Time.deltaTime;
+            isFiring = false;
             if (fireTime >= firerate)
             {
-                fireTime = 0;
                 Fire();
             }
         }
-        GetComponent<WeaponItem>().vfx.Stop();
+
+        //ADS
+        if (isADSing)
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.parent.Find("ADS_Weapon_Pos").position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        }
+        else
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        }
 
         //Reload
         if (isReloading)
         {
-            if (reloadTimer == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+            if (reloadTimer == 0)
+            {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+                reloadSound.Play();
+            }
             reloadTimer += Time.deltaTime;
             if (reloadTimer >= reloadTime) Reload();
         }
@@ -95,60 +113,64 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 
     public void Fire()
     {
+        fireTime = 0;
         //Ammo
         if (ammoInMag == 0)
         {
-            isFiring = false;
             return;
         }
-        //Visuals
-        if (!shootingSystem.isPlaying) shootingSystem.Play();
         ammoInMag -= 1;
 
+        //Visuals
+        shootingSystem.Play();
+        shootSound.Play();
+
+        //Stats
         PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
 
         //RayCast Hit:
         int layerMask = LayerMask.GetMask("World", "Creature", "Wall");
-        Vector3 direction = GetDirection();
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, direction, out hit, Mathf.Infinity, layerMask))
-        {
-            GameObject hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
-            {
-                Debug.Log("Hit the maze");
-            }
+        for (int i = 0; i < bulletsPerShot; i++) {
+            Vector3 direction = GetDirection();
 
-            if (hitObject.CompareTag("Creature"))
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, direction, out hit, Mathf.Infinity, layerMask))
             {
-                Debug.Log("Hit a creature");
-                hitObject.GetComponent<ICreature>().TakeDamage(damage);
+                GameObject hitObject = hit.transform.gameObject;
+                if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
+                {
+                    Debug.Log("Hit the maze");
+                }
+
+                if (hitObject.CompareTag("Creature"))
+                {
+                    Debug.Log("Hit a creature");
+                    hitObject.GetComponent<ICreature>().TakeDamage(damage);
+                }
+                TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, hit));
+                Debug.DrawRay(bulletPoint.position, hit.point, Color.green);
             }
-            TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
-            StartCoroutine(SpawnTrail(trail, hit));
-            Debug.DrawRay(bulletPoint.position, hit.point, Color.green);
-        }
-        else
-        {
-            Debug.DrawRay(bulletPoint.position, direction * 1000, Color.red);
-            Debug.Log("Hit nothing");
-            TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
-            StartCoroutine(SpawnTrail(trail, hit));
+            else
+            {
+                Debug.DrawRay(bulletPoint.position, direction * 1000, Color.red);
+                Debug.Log("Hit nothing");
+                TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, hit));
+            }
         }
     }
     Vector3 GetDirection()
     {
         Vector3 direction = Camera.main.transform.forward;
-        if (addBulletSpread)
-        {
-            direction += new Vector3(
+
+        direction += new Vector3(
             Random.Range(-bulletSpreadVariance.x, bulletSpreadVariance.x),
             Random.Range(-bulletSpreadVariance.y, bulletSpreadVariance.y),
             Random.Range(-bulletSpreadVariance.z, bulletSpreadVariance.z)
-            );
-            direction.Normalize();
-        }
+        );
+        direction.Normalize();
         return direction;
     }
 
