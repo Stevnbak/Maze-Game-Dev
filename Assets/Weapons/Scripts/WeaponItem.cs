@@ -16,12 +16,11 @@ public class WeaponItem : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        GameObject weaponPos = GameObject.FindGameObjectWithTag("Player").transform.Find("Weapon_Pos").gameObject; ;
-        float ammo = weaponPos.GetComponentInChildren<IWeapon>().ammoTotal;
+        GameObject weaponPos = GameObject.FindGameObjectWithTag("Player").transform.Find("Weapon_Pos").gameObject;
         vfx.Stop();
         weaponPos.GetComponentInChildren<IWeapon>().Drop(transform);
         GetComponent<IWeapon>().Initialize();
-        GetComponent<IWeapon>().ammoTotal = ammo;
+        GetComponent<IWeapon>().ammoTotal = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>().ammo;
         transform.parent = weaponPos.transform;
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localRotation = new Quaternion(0, 0, 0, 0);

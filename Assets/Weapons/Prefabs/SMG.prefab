@@ -24310,8 +24310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23d90b6bf72efd4ab86d3fac4f845a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  firerate: 0.25
+  damage: 6
+  firerate: 0.22
   setAmmoTotal: 100
   ammoMagTotal: 24
   reloadTime: 0.4

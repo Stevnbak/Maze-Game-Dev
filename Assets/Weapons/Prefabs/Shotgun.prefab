@@ -14795,12 +14795,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eae79b7b20949e48b80349d55019eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 3
   firerate: 1
   setAmmoTotal: 100
   ammoMagTotal: 8
   reloadTime: 1.5
-  bulletsPerShot: 10
+  bulletsPerShot: 12
   lookingAt: {fileID: 0}
   bulletSpreadVariance: {x: 0.5, y: 0.5, z: 0.5}
   bulletPoint: {fileID: 7139092206144444829}

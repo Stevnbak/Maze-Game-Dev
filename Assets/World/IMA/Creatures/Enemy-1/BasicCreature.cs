@@ -99,6 +99,7 @@ public class BasicCreature : MonoBehaviour, ICreature
         }
         else
         {
+            GetComponent<AudioSource>().Stop();
             attackVFX.Stop();
         }
     }
@@ -106,6 +107,7 @@ public class BasicCreature : MonoBehaviour, ICreature
     void Attack()
     {
         attackVFX.Play();
+        if(!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
         transform.LookAt(target.transform.position);
         //Debug.Log("Attacking player");
         randomDestSet = false;

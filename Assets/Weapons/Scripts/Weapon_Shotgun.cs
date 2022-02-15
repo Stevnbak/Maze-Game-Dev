@@ -7,7 +7,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 {
     [Header("Stats")]
     public float damage;
-    public float firerate, setAmmoTotal, ammoMagTotal, reloadTime, bulletsPerShot;
+    public float firerate, ammoMagTotal, reloadTime, bulletsPerShot;
     public float ammoInMag { get; set; }
     public float ammoTotal { get; set; }
     public Transform lookingAt;
@@ -33,11 +33,6 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
 
-    void Start()
-    {
-        ammoTotal = setAmmoTotal;
-    }
-
     public void Initialize()
     {
         this.enabled = true;
@@ -52,9 +47,6 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 
     void Update()
     {
-        //Update editor total ammo
-        setAmmoTotal = ammoTotal;
-
         //Aim gun
         transform.LookAt(lookingAt);
 

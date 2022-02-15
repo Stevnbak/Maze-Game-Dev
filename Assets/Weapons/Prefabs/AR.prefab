@@ -9891,11 +9891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23d90b6bf72efd4ab86d3fac4f845a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  firerate: 0.25
+  damage: 8.5
+  firerate: 0.3
   setAmmoTotal: 100
   ammoMagTotal: 18
-  reloadTime: 0.75
+  reloadTime: 0.7
   lookingAt: {fileID: 0}
   addBulletSpread: 1
   bulletSpreadVariance: {x: 0.025, y: 0.025, z: 0.025}

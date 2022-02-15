@@ -10,9 +10,11 @@ public class EndScreen : MonoBehaviour
     [Header("States")]
     public GameObject winState;
     public GameObject loseState;
+
     [Header("Times")]
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI bestTimeText;
+
     [Header("Stats")]
     public TextMeshProUGUI objectives;
     public TextMeshProUGUI enemies;
@@ -27,11 +29,14 @@ public class EndScreen : MonoBehaviour
         if (PlayerPrefs.GetString("state") == "win") winState.SetActive(true); else loseState.SetActive(true);
         //Time
         float time = PlayerPrefs.GetFloat("time");
-        float bestTime = PlayerPrefs.GetFloat("bestTime", 0);
+        float bestTime = PlayerPrefs.GetFloat("bestTime" + PlayerPrefs.GetInt("difficulty"), 0);
         if (PlayerPrefs.GetString("state") == "win")
         {
-            if (time < bestTime) bestTime = time;
-            PlayerPrefs.SetFloat("bestTime", bestTime);
+            if (time < bestTime || bestTime == 0)
+            {
+                bestTime = time;
+                PlayerPrefs.SetFloat("bestTime" + PlayerPrefs.GetInt("difficulty"), bestTime);
+            }
         }
         float minutes = Mathf.Floor(time / 60);
         float seconds = time - (minutes * 60);

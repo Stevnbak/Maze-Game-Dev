@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  ammo: 100
 --- !u!114 &7306701142075121938
 MonoBehaviour:
   m_ObjectHideFlags: 0

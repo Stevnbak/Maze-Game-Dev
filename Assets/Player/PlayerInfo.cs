@@ -6,14 +6,17 @@ public class PlayerInfo : MonoBehaviour, ICreature
 {
     public float health { get; set; }
     public float maxHealth;
+    public float ammo;
     
     void Start()
     {
         health = maxHealth;
+        GetComponentInChildren<IWeapon>().ammoTotal = ammo;
     }
 
     void Update()
     {
+        ammo = GetComponentInChildren<IWeapon>().ammoTotal;
         health = Mathf.Clamp(health, 0, maxHealth);
         if(health <= 0)
         {

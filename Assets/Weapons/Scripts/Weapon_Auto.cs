@@ -33,12 +33,6 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
 
-
-    void Start()
-    {
-        ammoTotal = setAmmoTotal;
-    }
-
     public void Initialize()
     {
         this.enabled = true;
@@ -53,9 +47,6 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
 
     void Update()
     {
-        //Update editor total ammo
-        setAmmoTotal = ammoTotal;
-
         //Aim gun
         transform.LookAt(lookingAt);
 
