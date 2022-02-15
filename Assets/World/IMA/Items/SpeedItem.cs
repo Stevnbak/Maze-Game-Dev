@@ -19,6 +19,7 @@ public class SpeedItem : MonoBehaviour, IInteractable
         MovementController player = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementController>();
         player.speedBoostTime = duration;
         player.speedBoostEffect = speedBonus;
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, transform.position);
         Destroy(gameObject);
     }
 }

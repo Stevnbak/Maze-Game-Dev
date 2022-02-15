@@ -29,7 +29,8 @@ public class MainMenu : MonoBehaviour
     }
     void Update()
     {
-        difficultyDisplay.text = difficulty.value.ToString();
+        int difficultyValue = (int) difficulty.value;
+        difficultyDisplay.text = difficultyValue == 1 ? "Easy" : difficultyValue == 2 ? "Medium" : difficultyValue == 3 ? "Hard" : difficultyValue == 4 ? "Why would you do this?" : "null"; ;
         InputSystem.Update();
     }
 

@@ -13,6 +13,7 @@ public class DestructionItem : MonoBehaviour, IInteractable
 
     public void interact()
     {
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, transform.position);
         Destroy(gameObject);
     }
 }

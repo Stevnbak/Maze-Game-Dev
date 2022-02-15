@@ -13,7 +13,7 @@ public class ObjectiveHud : MonoBehaviour
 
     private void Start()
     {
-        objCounter = GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>();
+        objCounter = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<ObjectiveCounter>();
     }
 
     void Update()

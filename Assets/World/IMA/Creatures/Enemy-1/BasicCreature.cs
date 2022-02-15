@@ -141,7 +141,7 @@ public class BasicCreature : MonoBehaviour, ICreature
     void Death()
     {
         PlayerPrefs.SetFloat("enemyKills", PlayerPrefs.GetFloat("enemyKills") + 1);
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective("creature");
+        GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<ObjectiveCounter>().countObjective("creature");
         GameObject vfxObj = Instantiate(deathVFX.gameObject);
         vfxObj.transform.position = transform.position;
         vfxObj.GetComponent<ParticleSystem>().Play();

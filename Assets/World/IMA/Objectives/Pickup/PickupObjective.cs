@@ -15,7 +15,8 @@ public class PickupObjective : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<ObjectiveCounter>().countObjective(objectiveName);
+        GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<ObjectiveCounter>().countObjective(objectiveName);
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, transform.position);
         Destroy(gameObject);
     }
 }

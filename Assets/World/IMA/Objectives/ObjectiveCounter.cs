@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ObjectiveCounter : MonoBehaviour
 {
-    //public List<KeyValuePair<string, float>> objectives = new List<KeyValuePair<string, float>>();
     [System.Serializable]
     public class ObjectiveEntry
     {
@@ -19,7 +18,7 @@ public class ObjectiveCounter : MonoBehaviour
 
     private void Start()
     {
-        gameController = GetComponent<IGameController>();
+        gameController = transform.parent.GetComponent<IGameController>();
     }
 
     private void Update()
@@ -30,6 +29,7 @@ public class ObjectiveCounter : MonoBehaviour
             if(entry.count >= entry.goal && !entry.completed)
             {
                 gameController.objectivesCompleted += 1;
+                GetComponent<AudioSource>().Play();
                 entry.completed = true;
             }
         }
@@ -44,7 +44,7 @@ public class ObjectiveCounter : MonoBehaviour
             {
                 entry.count += 1;
                 foundObjective = true;
-                GetComponent<HUD>().ObjectivePopup(entry.name, entry.count, entry.goal);
+                transform.parent.GetComponent<HUD>().ObjectivePopup(entry.name, entry.count, entry.goal);
             }
         }
         if (!foundObjective) Debug.LogError("Objective named " + type + " wasn't found");
