@@ -25,6 +25,7 @@ public class EndScreen : MonoBehaviour
     void Start()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         SceneManager.LoadSceneAsync("MenuBackground", LoadSceneMode.Additive);
         if (PlayerPrefs.GetString("state") == "win") winState.SetActive(true); else loseState.SetActive(true);
         //Time

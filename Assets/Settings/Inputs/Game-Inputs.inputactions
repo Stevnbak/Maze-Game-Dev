@@ -120,7 +120,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse;Game",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -131,7 +131,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse;Game",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -142,7 +142,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse;Game",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -153,10 +153,21 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse;Game",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "860fc7d8-0c9f-4ebb-b5c4-c1c2f6cccae4",
+                    "path": "<Gamepad>/leftstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Game",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -175,7 +186,7 @@
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse;Game",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -216,10 +227,21 @@
                 {
                     "name": "",
                     "id": "0779d70c-352b-4424-87c0-fce6e1c3878e",
-                    "path": "<mouse>/rightButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse;Game",
+                    "action": "ADS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48f5aeb2-ad3f-4c0f-b59b-25b399331620",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
                     "action": "ADS",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -227,10 +249,10 @@
                 {
                     "name": "",
                     "id": "934f2bcb-7f5c-4240-abc4-3d6d05225d97",
-                    "path": "<mouse>/leftButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -238,10 +260,21 @@
                 {
                     "name": "",
                     "id": "1771123b-b4ee-4b2a-93a4-dc6174f41058",
-                    "path": "Keyboard/R",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ad3798b-3704-470b-8c0d-92cc985d7461",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
                     "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -249,10 +282,10 @@
                 {
                     "name": "",
                     "id": "f33c1570-5424-4fc0-a0d1-5dfb6b52a1d8",
-                    "path": "Keyboard/F",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
                     "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -260,10 +293,10 @@
                 {
                     "name": "",
                     "id": "328e9492-1db7-4c92-b7e6-acc348404467",
-                    "path": "Keyboard/Tab",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
                     "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -271,10 +304,10 @@
                 {
                     "name": "",
                     "id": "58e850a0-6ce1-4cf0-a277-62433f337db1",
-                    "path": "Keyboard/Tab",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
                     "action": "Show_Objectives",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -282,11 +315,77 @@
                 {
                     "name": "",
                     "id": "c4301ddc-3144-4070-a07c-0935caf6e3c6",
-                    "path": "Keyboard/Escape",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Game;Keyboard&Mouse",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9265b702-1c0b-437a-bfa8-c04f216e70b4",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "274864bf-e1c8-4c33-91e3-ac9ffd714c5d",
+                    "path": "<Gamepad>/rightstick",
+                    "interactions": "",
+                    "processors": "StickDeadzone,ScaleVector2(x=50,y=50)",
+                    "groups": "Gamepad;Game",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0321b8f-21d1-4839-962c-755c59b06af5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
+                    "action": "Show_Objectives",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9c93b8d-4ac2-4597-b6ee-02e512973725",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4bdeae6e-eb43-4785-a03e-3b66088b6b7b",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0881fd73-da41-4a30-82f3-a54561830a30",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -298,9 +397,9 @@
             "actions": [
                 {
                     "name": "Pause",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "e02c86b3-9a58-4be8-8cc4-c7000b807346",
-                    "expectedControlType": "Integer",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -312,7 +411,18 @@
                     "path": "Keyboard/Escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse;Game",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf88da59-0d45-4195-9b75-161ab54481df",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Game;Gamepad",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -349,17 +459,6 @@
             ]
         },
         {
-            "name": "Touch",
-            "bindingGroup": "Touch",
-            "devices": [
-                {
-                    "devicePath": "<Touchscreen>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
             "name": "Joystick",
             "bindingGroup": "Joystick",
             "devices": [
@@ -371,12 +470,22 @@
             ]
         },
         {
-            "name": "XR",
-            "bindingGroup": "XR",
+            "name": "Game",
+            "bindingGroup": "Game",
             "devices": [
                 {
-                    "devicePath": "<XRController>",
-                    "isOptional": false,
+                    "devicePath": "<Gamepad>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]

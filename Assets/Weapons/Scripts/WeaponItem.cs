@@ -19,8 +19,8 @@ public class WeaponItem : MonoBehaviour, IInteractable
         GameObject weaponPos = GameObject.FindGameObjectWithTag("Player").transform.Find("Weapon_Pos").gameObject;
         vfx.Stop();
         weaponPos.GetComponentInChildren<IWeapon>().Drop(transform);
-        GetComponent<IWeapon>().Initialize();
         GetComponent<IWeapon>().ammoTotal = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>().ammo;
+        GetComponent<IWeapon>().Initialize();
         transform.parent = weaponPos.transform;
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localRotation = new Quaternion(0, 0, 0, 0);

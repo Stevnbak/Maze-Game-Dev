@@ -35,6 +35,7 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
 
     public void Initialize()
     {
+        Debug.Log("Initializing");
         this.enabled = true;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Input_Manager>().updateWeapon(this);
         lookingAt = GameObject.Find("LookingAt").transform;

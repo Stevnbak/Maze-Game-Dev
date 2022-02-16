@@ -35,6 +35,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 
     public void Initialize()
     {
+        Debug.Log("Initializing");
         this.enabled = true;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Input_Manager>().updateWeapon(this);
         lookingAt = GameObject.Find("LookingAt").transform;
@@ -92,6 +93,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 
     public void Reload()
     {
+        Debug.Log("Reloaded");
         isReloading = false;
         if (ammoTotal == 0) return;
         ammoTotal -= ammoMagTotal - ammoInMag;

@@ -12,6 +12,7 @@ public class PlayerInfo : MonoBehaviour, ICreature
     {
         health = maxHealth;
         GetComponentInChildren<IWeapon>().ammoTotal = ammo;
+        GetComponentInChildren<IWeapon>().Initialize();
     }
 
     void Update()
