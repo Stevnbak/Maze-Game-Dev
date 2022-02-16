@@ -14,7 +14,7 @@
     "com.unity.render-pipelines.universal": "11.0.0",
     "com.unity.services.analytics": "3.0.0-pre.2",
     "com.unity.services.cloudsave": "1.0.0-pre.3",
-    "com.unity.test-framework": "1.1.30",
+    "com.unity.test-framework": "1.1.31",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.5.7",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "1.0.0",

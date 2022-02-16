@@ -16,28 +16,26 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
     public bool addBulletSpread = true;
     public Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
     public Transform bulletPoint;
-    
 
     [Header("Visuals")]
     public TrailRenderer bulletTrail;
     public ParticleSystem shootingSystem;
     public ParticleSystem hitSystem;
 
-    //Bools
+    [Header("Audio")]
+    public AudioSource shootSound;
+    public AudioSource reloadSound;
+
+    [Header("Other")]
+    float reloadTimer;
     public bool isFiring { get; set; }
     public bool isReloading { get; set; }
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
 
-    float reloadTimer;
-
-    void Start()
-    {
-        ammoTotal = setAmmoTotal;
-    }
-
     public void Initialize()
     {
+        Debug.Log("Initializing");
         this.enabled = true;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Input_Manager>().updateWeapon(this);
         lookingAt = GameObject.Find("LookingAt").transform;
@@ -50,14 +48,13 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
 
     void Update()
     {
-        //Update editor total ammo
-        setAmmoTotal = ammoTotal;
-
         //Aim gun
         transform.LookAt(lookingAt);
 
         //Stop vfx when not shooting
         if(!isFiring) shootingSystem.Stop();
+        GetComponent<WeaponItem>().vfx.Stop();
+
         //Fire
         fireTime += Time.deltaTime;
         if (isFiring) {
@@ -67,12 +64,26 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
                 Fire();
             }
         }
-        GetComponent<WeaponItem>().vfx.Stop();
+
+        //ADS
+        if (isADSing)
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.parent.Find("ADS_Weapon_Pos").position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        }
+        else
+        {
+            Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.position, Time.deltaTime * 10f);
+            transform.position = newposition;
+        }
 
         //Reload
         if (isReloading)
         {
-            if(reloadTimer == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+            if (reloadTimer == 0) { 
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
+                reloadSound.Play();
+            }
             reloadTimer += Time.deltaTime;
             if(reloadTimer >= reloadTime) Reload();
         }
@@ -103,6 +114,7 @@ public class Weapon_Auto : MonoBehaviour, IWeapon
         ammoInMag -= 1;
 
         PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
+        shootSound.Play();
 
         //RayCast Hit:
         int layerMask = LayerMask.GetMask("World", "Creature", "Wall");

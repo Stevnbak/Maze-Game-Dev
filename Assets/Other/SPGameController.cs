@@ -29,9 +29,9 @@ public class SPGameController : MonoBehaviour, IGameController
     {
         GetComponent<MazeGenerator>().GenerateMaze(difficulty);
         GetComponent<Spawning>().Spawn(difficulty, GetComponent<MazeGenerator>().size);
-        for(int i = 0; i < 5 * difficulty; i++) GetComponent<ObjectiveCounter>().addObjective("creature");
-        //NavMeshBuilder.ClearAllNavMeshes();
-        //NavMeshBuilder.BuildNavMesh();
+        int enemyCount;
+        enemyCount = difficulty == 1 ? 5 : difficulty == 2 ? 10 : difficulty == 3 ? 20 : difficulty == 4 ? 50 : 0;
+        for (int i = 0; i < enemyCount; i++) GetComponentInChildren<ObjectiveCounter>().addObjective("creature");
         objectivesCompleted = 0;
         isGameRunning = true;
     }

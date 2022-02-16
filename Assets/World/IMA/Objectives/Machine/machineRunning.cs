@@ -43,7 +43,7 @@ public class machineRunning : MonoBehaviour, ICreature
 
         if(time >= goalTime)
         {
-            gameControllerObj.GetComponent<ObjectiveCounter>().countObjective("machine");
+            gameControllerObj.GetComponentInChildren<ObjectiveCounter>().countObjective("machine");
             Destroy(gameObject);
         }
 

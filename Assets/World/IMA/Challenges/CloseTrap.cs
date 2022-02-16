@@ -14,6 +14,7 @@ public class CloseTrap : MonoBehaviour
     {
         if (isTriggered)
         {
+            if(t == 0) GetComponent<AudioSource>().Play();
             t += Time.deltaTime;
             if (t >= time) close();
         }

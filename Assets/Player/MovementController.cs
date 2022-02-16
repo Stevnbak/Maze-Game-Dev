@@ -31,6 +31,7 @@ public class MovementController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         maxSpeed = walkSpeed;
         Physics.gravity = new Vector3(0,-gravity,0);
+        isSprinting = true;
     }
 
     //Update

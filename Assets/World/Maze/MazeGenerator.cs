@@ -12,12 +12,12 @@ public class MazeGenerator : MonoBehaviour
 
 	public void GenerateMaze(int difficulty)
 	{
-		size = difficulty == 1 ? 10 : difficulty == 2 ? 16 : difficulty == 3 ? 20 : difficulty == 4 ? 32 : difficulty == 5 ? 64 : 0;
+		size = difficulty == 1 ? 10 : difficulty == 2 ? 16 : difficulty == 3 ? 32 : difficulty == 4 ? 32 : 0;
 		mapCam.orthographicSize = size * 2.5f;
 
 		if (size == 0)
         {
-			Debug.Log("Difficulty was not one of the preset difficulties (1, 2, 3, 4, 5) maze generation stopped");
+			Debug.Log("Difficulty was not one of the preset difficulties (1, 2, 3, 4) maze generation stopped");
 			return;
         }
 		cells = new GameObject[size, size];

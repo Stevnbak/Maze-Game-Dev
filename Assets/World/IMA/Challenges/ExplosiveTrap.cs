@@ -15,6 +15,7 @@ public class ExplosiveTrap : MonoBehaviour
     {
         if(isTriggered)
         {
+            if (t == 0) GetComponent<AudioSource>().Play();
             t += Time.deltaTime;
             if (t >= time) explosion();
         }
@@ -30,7 +31,10 @@ public class ExplosiveTrap : MonoBehaviour
 
     void explosion()
     {
-        Instantiate(vfx.gameObject, transform.position, transform.rotation, null).GetComponent<ParticleSystem>().Play();
+        GameObject vfxObj = Instantiate(vfx.gameObject, transform.position, transform.rotation, null);
+        vfxObj.GetComponent<ParticleSystem>().Play();
+        vfxObj.GetComponent<AudioSource>().Play();
+
         Debug.Log("Explosion!");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
         foreach (var hitCollider in hitColliders)

@@ -17,6 +17,7 @@ public class HealthItem : MonoBehaviour, IInteractable
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerInfo>().health += healthBonus;
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, transform.position);
         Destroy(gameObject);
     }
 }

@@ -17,6 +17,7 @@ public class AmmoItem : MonoBehaviour, IInteractable
     {
         IWeapon weapon = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<IWeapon>();
         weapon.ammoTotal += ammoBonus;
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, transform.position);
         Destroy(gameObject);
     }
 }

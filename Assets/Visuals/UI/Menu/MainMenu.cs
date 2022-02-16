@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
+    public EventSystem eventSystem;
+    public GameObject mainButton;
     [Header("Screens")]
     public GameObject startScreen;
     public GameObject quitPopup;
@@ -18,6 +21,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         SceneManager.LoadSceneAsync("MenuBackground", LoadSceneMode.Additive);
         difficulty.value = PlayerPrefs.GetInt("difficulty");
         PlayerPrefs.SetFloat("objectivesCount", 0);
@@ -29,7 +34,8 @@ public class MainMenu : MonoBehaviour
     }
     void Update()
     {
-        difficultyDisplay.text = difficulty.value.ToString();
+        int difficultyValue = (int) difficulty.value;
+        difficultyDisplay.text = difficultyValue == 1 ? "Easy" : difficultyValue == 2 ? "Medium" : difficultyValue == 3 ? "Hard" : difficultyValue == 4 ? "Why would you do this?" : "null"; ;
         InputSystem.Update();
     }
 
@@ -65,11 +71,13 @@ public class MainMenu : MonoBehaviour
 
     public void onYes()
     {
+        eventSystem.SetSelectedGameObject(mainButton);
         Application.Quit();
     }
 
     public void onNo()
     {
+        eventSystem.SetSelectedGameObject(mainButton);
         quitPopup.SetActive(false);
     }
 }

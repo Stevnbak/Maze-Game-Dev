@@ -26,11 +26,13 @@ public class Spawning : MonoBehaviour
     {
         this.mazeSize = mazeSize;
         //Pickup Objectives:
-        for (int i = 0; i < 5 * difficulty; i++)
+        int pickupCount;
+        pickupCount = difficulty == 1 ? 5 : difficulty == 2 ? 10 : difficulty == 3 ? 20 : difficulty == 4 ? 35 : 0;
+        for (int i = 0; i < pickupCount; i++)
         {
             GameObject objSpawn = pickupObjective;
 
-            GetComponent<ObjectiveCounter>().addObjective("pickup");
+            GetComponentInChildren<ObjectiveCounter>().addObjective("pickup");
 
             int r = Random.Range(1, 3);
             int x = Random.Range(0, mazeSize);
@@ -44,19 +46,23 @@ public class Spawning : MonoBehaviour
             Instantiate(objSpawn, position, Quaternion.identity, parent);
         }
         //Machine objectives
-        for (int i = 0; i < 1 * difficulty; i++)
+        int machineCount;
+        machineCount = difficulty == 1 ? 0 : difficulty == 2 ? 1 : difficulty == 3 ? 3 : difficulty == 4 ? 5 : 6;
+        for (int i = 0; i < machineCount; i++)
         {
-            GetComponent<ObjectiveCounter>().addObjective("machine");
+            GetComponentInChildren<ObjectiveCounter>().addObjective("machine");
             spawnMachine();
         }
 
         //Traps
-        for (int i = 0; i < 7 * difficulty; i++)
+        int trapCount;
+        trapCount = difficulty == 1 ? 7 : difficulty == 2 ? 15 : difficulty == 3 ? 25 : difficulty == 4 ? 50 : 0;
+        for (int i = 0; i < trapCount; i++)
         {
             int r = Random.Range(1, 3);
-            GameObject objSpawn;
-            if (r == 1) objSpawn = explosiveTrap;
-            else objSpawn = closeTrap;
+            GameObject objSpawn = explosiveTrap;
+            //if (r == 1) objSpawn = explosiveTrap;
+            //else objSpawn = closeTrap;
 
             r = Random.Range(1, 3);
             int x = Random.Range(0, mazeSize);
@@ -85,17 +91,23 @@ public class Spawning : MonoBehaviour
             }
         }
         //Creatures
-        for (int i = 0; i < 3 * difficulty; i++)
+        int enemyCount;
+        enemyCount = difficulty == 1 ? 4 : difficulty == 2 ? 10 : difficulty == 3 ? 20 : difficulty == 4 ? 30 : 0;
+        for (int i = 0; i < enemyCount; i++)
         {
             spawnCreature();
         }
         //Item
-        for (int i = 0; i < 2 * difficulty; i++)
+        int itemCount;
+        itemCount = difficulty == 1 ? 2 : difficulty == 2 ? 5 : difficulty == 3 ? 10 : difficulty == 4 ? 20 : 0;
+        for (int i = 0; i < itemCount; i++)
         {
             spawnItem();
         }
-        //Item
-        for (int i = 0; i < 1 * difficulty; i++)
+        //Weapon
+        int weaponCount;
+        weaponCount = difficulty == 1 ? 1 : difficulty == 2 ? 3 : difficulty == 3 ? 5 : difficulty == 4 ? 10 : 0;
+        for (int i = 0; i < weaponCount; i++)
         {
             spawnWeapon();
         }
