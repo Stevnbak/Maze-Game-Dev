@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setTime: 0.5
-  ammoBonus: 25
+  ammoBonus: 40
 --- !u!82 &3341420682213870061
 AudioSource:
   m_ObjectHideFlags: 0

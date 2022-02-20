@@ -57,8 +57,7 @@ public class machineRunning : MonoBehaviour, ICreature
         Vector3 position = new Vector3(transform.position.x + x, 1, transform.position.y + y);
         GameObject newEnemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform.parent);
         Instantiate(spawnVFX.gameObject, position, Quaternion.identity, null);
-        newEnemy.GetComponent<BasicCreature>().target = this.gameObject;
-        newEnemy.GetComponent<BasicCreature>().targetTag = "Creature";
+        newEnemy.GetComponent<BasicEnemy>().target = this.gameObject;
     }
 
     void Death()

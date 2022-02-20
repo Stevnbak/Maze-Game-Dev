@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setTime: 0.5
-  healthBonus: 15
+  healthBonus: 33
 --- !u!82 &6402571832203325122
 AudioSource:
   m_ObjectHideFlags: 0

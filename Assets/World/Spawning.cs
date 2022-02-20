@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class Spawning : MonoBehaviour
 {
-    [Header("Objectives")]
+    [Header("Spawn prefabs")]
     public GameObject extractionObject;
     public GameObject pickupObjective;
     public GameObject machine;
-
-    [Header("Challenges")]
-    public GameObject explosiveTrap;
-    public GameObject closeTrap;
-    public GameObject basicEnemy;
-
-    [Header("Items")]
+    public GameObject[] traps;
+    public GameObject[] enemies;
     public GameObject[] weapons;
     public GameObject[] items;
 
@@ -59,10 +54,8 @@ public class Spawning : MonoBehaviour
         trapCount = difficulty == 1 ? 7 : difficulty == 2 ? 15 : difficulty == 3 ? 25 : difficulty == 4 ? 50 : 0;
         for (int i = 0; i < trapCount; i++)
         {
-            int r = Random.Range(1, 3);
-            GameObject objSpawn = explosiveTrap;
-            //if (r == 1) objSpawn = explosiveTrap;
-            //else objSpawn = closeTrap;
+            int r = Random.Range(0, traps.Length);
+            GameObject objSpawn = traps[r];
 
             r = Random.Range(1, 3);
             int x = Random.Range(0, mazeSize);
@@ -74,20 +67,34 @@ public class Spawning : MonoBehaviour
             Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 0f, (y * 5 - mazeSize * 2.5f) + 2.5f);
 
             GameObject trap = Instantiate(objSpawn, position, Quaternion.identity, parent);
+
+            //Rotate to open wall
+            float wallNumber = 0;
+            MazeCell trapObj = GameObject.Find("Maze Cell (" + x + ", " + y + ")").GetComponent<MazeCell>();
+            //Select wall
+            while (wallNumber == 0)
+            {
+                int w = Random.Range(1, 5);
+                if (w == 1 && !trapObj.Wall1) wallNumber = 1;
+                if (w == 2 && !trapObj.Wall2) wallNumber = 2;
+                if (w == 3 && !trapObj.Wall3) wallNumber = 3;
+                if (w == 4 && !trapObj.Wall4) wallNumber = 4;
+                if (trapObj.Wall1 && trapObj.Wall2 && trapObj.Wall3 && trapObj.Wall4) wallNumber = 1;
+            }
+            //Actual rotation
+            float rotation = 0;
+            if (wallNumber == 1) rotation = 0;
+            if (wallNumber == 2) rotation = 180;
+            if (wallNumber == 3) rotation = 270;
+            if (wallNumber == 4) rotation = 90;
+            trap.transform.Rotate(0, rotation, 0);
+
+            //Close trap set wall
             if (trap.GetComponent<CloseTrap>())
             {
                 CloseTrap trapScript = trap.GetComponent<CloseTrap>();
-                MazeCell trapObj = GameObject.Find("Maze Cell (" + x + ", " + y + ")").GetComponent<MazeCell>();
                 trapScript.trapCell = trapObj;
-                while (trapScript.wallNumber == 0)
-                {
-                    int w = Random.Range(1, 5);
-                    if (w == 1 && !trapObj.Wall1) trapScript.wallNumber = 1;
-                    if (w == 2 && !trapObj.Wall2) trapScript.wallNumber = 2;
-                    if (w == 3 && !trapObj.Wall3) trapScript.wallNumber = 3;
-                    if (w == 4 && !trapObj.Wall4) trapScript.wallNumber = 4;
-                    if (trapObj.Wall1 && trapObj.Wall2 && trapObj.Wall3 && trapObj.Wall4) trapScript.wallNumber = 1;
-                }
+                trapScript.wallNumber = wallNumber;
             }
         }
         //Creatures
@@ -126,7 +133,8 @@ public class Spawning : MonoBehaviour
         int y = Random.Range(0, mazeSize);
         if (y > mazeSize / 3 && y < mazeSize / 3 * 2) y = mazeSize / 3 * r;
         Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
-        Instantiate(basicEnemy, position, Quaternion.identity, parent);
+        r = Random.Range(0, enemies.Length);
+        Instantiate(enemies[r], position, Quaternion.identity, parent);
     }
 
     public void spawnWeapon()
@@ -135,7 +143,7 @@ public class Spawning : MonoBehaviour
         GameObject weaponPrefab = weapons[r];
         int x = Random.Range(0, mazeSize);
         int y = Random.Range(0, mazeSize);
-        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 0f, (y * 5 - mazeSize * 2.5f) + 2.5f);
         Instantiate(weaponPrefab, position, Quaternion.identity, parent);
     }
 
@@ -145,7 +153,7 @@ public class Spawning : MonoBehaviour
         GameObject itemPrefab = items[r];
         int x = Random.Range(0, mazeSize);
         int y = Random.Range(0, mazeSize);
-        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 1f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, 0f, (y * 5 - mazeSize * 2.5f) + 2.5f);
         Instantiate(itemPrefab, position, Quaternion.identity, parent);
     }
 
