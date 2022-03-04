@@ -43,26 +43,23 @@ public class Player_Input_Manager : MonoBehaviour
         if (!gameController.isGameRunning) return;
         movementController.mouseVec = input.Get<Vector2>();
     }
-    public void OnSprint(InputValue input)
+    /*public void OnSprint(InputValue input)
     {
-        return;
         if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 0) movementController.isSprinting = false;
         if (input.Get<float>() == 1) movementController.isSprinting = true;
     }
     public void OnCrouch(InputValue input)
     {
-        return;
         if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 0) movementController.isCrouching = false;
         if (input.Get<float>() == 1) movementController.isCrouching = true;
     }
     public void OnJump(InputValue input)
     {
-        return;
         if (!gameController.isGameRunning) return;
         if (input.Get<float>() == 1) movementController.Jump();
-    }
+    }*/
 
     //Weapon
     void OnFire(InputValue input)

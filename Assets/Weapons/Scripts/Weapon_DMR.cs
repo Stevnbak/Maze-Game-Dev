@@ -78,6 +78,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         //Reload
         if (isReloading)
         {
+            if (ammoInMag == ammoMagTotal) return;
             if (reloadTimer == 0)
             {
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
@@ -111,12 +112,17 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
             isFiring = false;
             return;
         }
+
         //Visuals
         shootingSystem.Play();
         ammoInMag -= 1;
-
-        PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
         shootSound.Play();
+
+        //Stats
+        PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
+
+        //Recoil
+        GetComponent<Recoil>().bulletFired(firerate / 2);
 
         //RayCast Hit:
         int layerMask = LayerMask.GetMask("World", "Creature", "Wall");
@@ -128,12 +134,12 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
             GameObject hitObject = hit.transform.gameObject;
             if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
             {
-                Debug.Log("Hit the maze");
+                //Debug.Log("Hit the maze");
             }
 
             if (hitObject.CompareTag("Creature"))
             {
-                Debug.Log("Hit a creature");
+                //Debug.Log("Hit a creature");
                 hitObject.GetComponent<ICreature>().TakeDamage(damage);
             }
             Debug.DrawRay(bulletPoint.position, hit.point, Color.green);
@@ -141,7 +147,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         else
         {
             Debug.DrawRay(bulletPoint.position, direction * 1000, Color.red);
-            Debug.Log("Hit nothing");
+            //Debug.Log("Hit nothing");
         }
 
         GameObject hitParticle = Instantiate(hitSystem.gameObject);

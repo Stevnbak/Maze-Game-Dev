@@ -80,6 +80,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
         //Reload
         if (isReloading)
         {
+            if (ammoInMag == ammoMagTotal) return;
             if (reloadTimer == 0)
             {
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
@@ -119,6 +120,9 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
         shootingSystem.Play();
         shootSound.Play();
 
+        //Recoil
+        GetComponent<Recoil>().bulletFired(firerate / 2);
+
         //Stats
         PlayerPrefs.SetFloat("shotsFired", PlayerPrefs.GetFloat("shotsFired") + 1);
 
@@ -134,12 +138,12 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
                 GameObject hitObject = hit.transform.gameObject;
                 if (hitObject.CompareTag("Wall") || hitObject.CompareTag("Ground"))
                 {
-                    Debug.Log("Hit the maze");
+                    //Debug.Log("Hit the maze");
                 }
 
                 if (hitObject.CompareTag("Creature"))
                 {
-                    Debug.Log("Hit a creature");
+                    //Debug.Log("Hit a creature");
                     hitObject.GetComponent<ICreature>().TakeDamage(damage);
                 }
                 TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
@@ -149,7 +153,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
             else
             {
                 Debug.DrawRay(bulletPoint.position, direction * 1000, Color.red);
-                Debug.Log("Hit nothing");
+                //Debug.Log("Hit nothing");
                 TrailRenderer trail = Instantiate(bulletTrail, bulletPoint.position, Quaternion.identity);
                 StartCoroutine(SpawnTrail(trail, hit));
             }
