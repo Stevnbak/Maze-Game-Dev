@@ -7,6 +7,7 @@ public class WeaponItem : MonoBehaviour, IInteractable
     public float time { get; set; }
     public float setTime;
     public ParticleSystem vfx;
+    public Sprite icon;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class WeaponItem : MonoBehaviour, IInteractable
         GameObject weaponPos = GameObject.FindGameObjectWithTag("Player").transform.Find("Weapon_Pos").gameObject;
         vfx.Stop();
         weaponPos.GetComponentInChildren<IWeapon>().Drop(transform);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().WeaponIcon.sprite = icon;
         GetComponent<IWeapon>().ammoTotal = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>().ammo;
         GetComponent<IWeapon>().Initialize();
         transform.parent = weaponPos.transform;

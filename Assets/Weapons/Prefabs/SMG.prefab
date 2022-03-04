@@ -24259,6 +24259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setTime: 1
   vfx: {fileID: 4273228761038441513}
+  icon: {fileID: 21300000, guid: d2e9cabeb8e7e4e45847a886ca8636e1, type: 3}
 --- !u!65 &1061256659059050571
 BoxCollider:
   m_ObjectHideFlags: 0

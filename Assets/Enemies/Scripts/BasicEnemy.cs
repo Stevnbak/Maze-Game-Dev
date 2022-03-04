@@ -11,14 +11,14 @@ public class BasicEnemy : MonoBehaviour, ICreature
     public float targetRange, attackRange, randomRange, trackRange;
 
     [Header("Stats")]
-    public float maxHealth;
+    public float setMaxHealth;
+    public float maxHealth { get; set; }
     public float health { get; set; }
 
     [Header("Other")]
     public ParticleSystem deathVFX;
     public GameObject target;
     IAttack attack;
-    int currentAttack; 
 
     bool randomDestSet = false;
     bool lineOfSight;
@@ -26,6 +26,7 @@ public class BasicEnemy : MonoBehaviour, ICreature
 
     void Start()
     {
+        maxHealth = setMaxHealth;
         health = maxHealth;
         agent = GetComponentInChildren<NavMeshAgent>();
         if (target == null) target = GameObject.FindGameObjectWithTag("Player");
@@ -34,6 +35,7 @@ public class BasicEnemy : MonoBehaviour, ICreature
 
     void FixedUpdate()
     {
+        maxHealth = setMaxHealth;
         //Update target
         if (target == null) target = GameObject.FindGameObjectWithTag("Player"); 
 
@@ -41,8 +43,7 @@ public class BasicEnemy : MonoBehaviour, ICreature
         int layerMask = LayerMask.GetMask("World", "Creature", "Wall", "Player");
         Vector3 direction = (target.transform.position - transform.position);
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(transform.position, target.transform.position), layerMask))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Vector3.Distance(transform.position, target.transform.position), layerMask))
         {
             GameObject hitObject = hit.transform.gameObject;
             lineOfSight = (hitObject == target);

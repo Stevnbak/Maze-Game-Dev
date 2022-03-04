@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour, ICreature
 {
     public float health { get; set; }
-    public float maxHealth;
+    public float setMaxHealth;
+    public float maxHealth { get; set; }
     public float ammo;
     
     void Start()
     {
+        maxHealth = setMaxHealth;
         health = maxHealth;
         GetComponentInChildren<IWeapon>().ammoTotal = ammo;
         GetComponentInChildren<IWeapon>().Initialize();
@@ -17,6 +19,7 @@ public class PlayerInfo : MonoBehaviour, ICreature
 
     void Update()
     {
+        maxHealth = setMaxHealth;
         ammo = GetComponentInChildren<IWeapon>().ammoTotal;
         health = Mathf.Clamp(health, 0, maxHealth);
         if(health <= 0)
