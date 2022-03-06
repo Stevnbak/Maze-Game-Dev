@@ -19,6 +19,7 @@ public class Spawning : MonoBehaviour
 
     public void Spawn(int difficulty, int mazeSize)
     {
+        float wallNumber = 0;
         this.mazeSize = mazeSize;
         //Pickup Objectives:
         int pickupCount;
@@ -69,7 +70,7 @@ public class Spawning : MonoBehaviour
             GameObject trap = Instantiate(objSpawn, position, Quaternion.identity, parent);
 
             //Rotate to open wall
-            float wallNumber = 0;
+            wallNumber = 0;
             MazeCell trapObj = GameObject.Find("Maze Cell (" + x + ", " + y + ")").GetComponent<MazeCell>();
             //Select wall
             while (wallNumber == 0)
@@ -120,8 +121,25 @@ public class Spawning : MonoBehaviour
         }
 
         //Extraction
-        Vector3 extractPosition = new Vector3(0, 2, 0);
-        Instantiate(extractionObject, extractPosition, Quaternion.identity, parent);
+        MazeCell midCell = GameObject.Find("Maze Cell (" + Mathf.RoundToInt(mazeSize / 2) + ", " + Mathf.RoundToInt(mazeSize / 2) + ")").GetComponent<MazeCell>();
+        wallNumber = 0;
+        Vector3 extractPosition;
+        Quaternion extractRotation;
+        while (wallNumber == 0)
+        {
+            int w = Random.Range(1, 5);
+            if (w == 1 && midCell.Wall1) wallNumber = 1;
+            if (w == 2 && midCell.Wall2) wallNumber = 2;
+            if (w == 3 && midCell.Wall3) wallNumber = 3;
+            if (w == 4 && midCell.Wall4) wallNumber = 4;
+            if (!midCell.Wall1 && !midCell.Wall2 && !midCell.Wall3 && !midCell.Wall4) wallNumber = 1;
+        }
+        if (wallNumber == 1) { extractPosition = midCell.transform.position + new Vector3(0, 1.5f, -2.225f); extractRotation = Quaternion.Euler(new Vector3(0, 90, 0)); }
+        else if (wallNumber == 2) { extractPosition = midCell.transform.position + new Vector3(0, 1.5f, 2.225f); extractRotation = Quaternion.Euler(new Vector3(0, -90, 0)); }
+        else if (wallNumber == 3) { extractPosition = midCell.transform.position + new Vector3(2.225f, 1.5f, 0); extractRotation = Quaternion.Euler(new Vector3(0, 0, 0)); }
+        else { extractPosition = midCell.transform.position + new Vector3(-2.225f, 1.5f, 0); extractRotation = Quaternion.Euler(new Vector3(0, 180, 0)); }
+
+        Instantiate(extractionObject, extractPosition, extractRotation, parent);
     }
 
     public void spawnCreature()

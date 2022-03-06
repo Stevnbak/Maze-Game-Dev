@@ -6,8 +6,9 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
 {
     [Header("Stats")]
     public float damage;
-    public float firerate, ammoMagTotal, reloadTime;
+    public float firerate, setMagTotal, reloadTime;
     public float ammoInMag { get; set; }
+    public float ammoMagTotal { get; set; }
     public float ammoTotal { get; set; }
     public Transform lookingAt;
 
@@ -33,7 +34,8 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
 
     public void Initialize()
     {
-        Debug.Log("Initializing");
+        Debug.Log("Initializing weapon");
+        ammoMagTotal = setMagTotal;
         this.enabled = true;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Input_Manager>().updateWeapon(this);
         lookingAt = GameObject.Find("LookingAt").transform;
@@ -176,6 +178,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         transform.rotation = otherTrans.rotation;
         GetComponent<WeaponItem>().SetLayerRecursively(gameObject, 3);
         gameObject.tag = "Item";
+        ammoInMag = 0;
         GetComponent<WeaponItem>().vfx.Play();
         this.enabled = false;
     }

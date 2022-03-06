@@ -9,7 +9,8 @@ public class Player_Input_Manager : MonoBehaviour
     MovementController movementController;
     IGameController gameController;
     IWeapon weaponManager;
-    bool interacting;
+    bool interacting, hovering;
+    GameObject lookingAt;
     IInteractable interactable;
     Transform interactTrans;
     public float maxInteractDistance;
@@ -109,28 +110,15 @@ public class Player_Input_Manager : MonoBehaviour
     void OnInteraction(InputValue input)
     {
         if (!gameController.isGameRunning) return;
-        if (input.Get<float>() == 1)
+        if (input.Get<float>() == 1 && hovering && lookingAt.GetComponent<IInteractable>() != null)
         {
-            int layerMask = 1 << 6;
-            layerMask = ~layerMask;
-            Vector3 direction = Camera.main.transform.TransformDirection(Vector3.forward);
-
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, direction, out hit, maxInteractDistance, layerMask))
-            {
-                Debug.DrawRay(Camera.main.transform.position, direction * hit.distance, Color.blue);
-                GameObject hitObject = hit.transform.gameObject;
-                if (hitObject.GetComponent<IInteractable>() != null)
-                {
-                    t = 0;
-                    interactable = hitObject.GetComponent<IInteractable>();
-                    interacting = true;
-                    weaponManager.isReloading = false;
-                    weaponManager.isFiring = false;
-                    weaponManager.isADSing = false;
-                    interactTrans = hitObject.transform;
-                }
-            }
+            t = 0;
+            interactable = lookingAt.GetComponent<IInteractable>();
+            interacting = true;
+            weaponManager.isReloading = false;
+            weaponManager.isFiring = false;
+            weaponManager.isADSing = false;
+            interactTrans = lookingAt.transform;
         }
         else
         {
@@ -176,6 +164,28 @@ public class Player_Input_Manager : MonoBehaviour
 
     void Update()
     {
+        int layerMask = 1 << 6;
+        layerMask = ~layerMask;
+        Vector3 direction = Camera.main.transform.TransformDirection(Vector3.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, direction, out hit, maxInteractDistance, layerMask))
+        {
+            Debug.DrawRay(Camera.main.transform.position, direction * hit.distance, Color.blue);
+            GameObject hitObject = hit.transform.gameObject;
+            if (lookingAt == null) lookingAt = hitObject;
+            if (hitObject.GetComponent<IInteractable>() != null)
+            {
+                lookingAt = hitObject;
+                hovering = true;
+                hitObject.GetComponent<IInteractable>().hovering = true;
+            } else if (lookingAt.GetComponent<IInteractable>() != null)
+            {
+                lookingAt.GetComponent<IInteractable>().hovering = false;
+            }
+        }
+
+
         if (interacting)
         {
             if (t == 0) GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(interactable.time);

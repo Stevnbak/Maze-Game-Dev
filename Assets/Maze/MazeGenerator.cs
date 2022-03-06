@@ -262,7 +262,7 @@ public class MazeGenerator : MonoBehaviour
 	}
 
 	private void CreateCell (int x, int z, bool w1, bool w2, bool w3, bool w4) {
-		GameObject newCell = Instantiate(cellPrefab, new Vector3((x * 5 - size * 2.5f) + 2.5f, 0f, (z * 5 - size * 2.5f) + 2.5f), Quaternion.identity, parent);
+		GameObject newCell = Instantiate(cellPrefab, new Vector3((x * 5 - size * 2.5f) + 2.5f, -0.5f, (z * 5 - size * 2.5f) + 2.5f), Quaternion.identity, parent);
 		cells[x, z] = newCell;
 		newCell.name = "Maze Cell (" + x + ", " + z + ")";
 		newCell.transform.parent = parent;

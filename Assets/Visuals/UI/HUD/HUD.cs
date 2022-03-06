@@ -16,19 +16,15 @@ public class HUD : MonoBehaviour
     public GameObject Objectives;
     public TextMeshProUGUI objPopupTitle;
     public TextMeshProUGUI objPopupSub;
+    public GameObject reloadPopUp;
 
     [Header("Info")]
     public float popupTime;
     float lastPopup;
     GameObject player;
-    public float health;
-    public float maxHealth;
-    public float ammo;
-    public float totalAmmo;
-    public bool interactInProgress;
-    public bool showingObjectiveScreen = false;
+    public float health, maxHealth, ammo, totalAmmo, magTotal, mapTime = 0;
+    public bool interactInProgress, showingObjectiveScreen = false;
     float t, time;
-    public float mapTime = 0;
     IGameController gameController;
 
     void Start()
@@ -43,6 +39,7 @@ public class HUD : MonoBehaviour
         health = player.GetComponent<PlayerInfo>().health;
         maxHealth = player.GetComponent<PlayerInfo>().maxHealth;
         ammo = player.GetComponentInChildren<IWeapon>().ammoInMag;
+        magTotal = player.GetComponentInChildren<IWeapon>().ammoMagTotal;
         totalAmmo = player.GetComponentInChildren<IWeapon>().ammoTotal;
 
         //Calculate health percent
@@ -52,6 +49,9 @@ public class HUD : MonoBehaviour
         AmmoCount.text = ammo.ToString();
         TotalAmmo.text = totalAmmo.ToString();
         HealthBar.value = healthPercent;
+        if(ammo == magTotal) 
+            reloadPopUp.SetActive(false);
+        else reloadPopUp.SetActive(true);
 
         //Show ojbective screen?
         Objectives.SetActive(showingObjectiveScreen);

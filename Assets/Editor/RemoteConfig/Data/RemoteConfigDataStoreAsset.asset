@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: '[]'
-  _rsLastCachedKeyList: '[]'
-  _environments: '[]'
-  _rulesList: '[]'
-  _lastCachedRulesList: '[]'
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"90da150a-8fce-4a61-a143-4ff428a70eab\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"multiplayer\",\r\n      \"value\": false,\r\n     
+    \"type\": \"bool\"\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"90da150a-8fce-4a61-a143-4ff428a70eab\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"multiplayer\",\r\n      \"value\": false,\r\n     
+    \"type\": \"bool\"\r\n    }\r\n  }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"39c03f46-1845-4774-b607-c31771bf79d3\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"ad4e6bb0-8960-4191-9d85-9b16bd7d2b3f\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2021-09-27T18:42:50Z\",\r\n    \"updatedAt\":
+    \"2021-09-27T18:42:50Z\"\r\n  }\r\n]"

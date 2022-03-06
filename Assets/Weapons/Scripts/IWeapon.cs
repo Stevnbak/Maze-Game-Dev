@@ -8,6 +8,7 @@ public interface IWeapon
     float fireTime { get; set; }
     float ammoInMag { get; set; }
     float ammoTotal { get; set; }
+    float ammoMagTotal { get; set; }
 
     void Fire();
     void Reload();
