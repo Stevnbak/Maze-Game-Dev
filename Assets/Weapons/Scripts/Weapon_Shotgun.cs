@@ -7,7 +7,7 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 {
     [Header("Stats")]
     public float damage;
-    public float firerate, setMagTotal, reloadTime, bulletsPerShot;
+    public float firerate, setMagTotal, reloadTime, reloadStepIncrease, bulletsPerShot;
     public float ammoInMag { get; set; }
     public float ammoMagTotal { get; set; }
     public float ammoTotal { get; set; }
@@ -82,11 +82,14 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
         //Reload
         if (isReloading)
         {
-            if (ammoInMag == ammoMagTotal) return;
+            if (ammoInMag == ammoMagTotal || ammoTotal == 0)
+            {
+                isReloading = false;
+                return;
+            }
             if (reloadTimer == 0)
             {
-                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime);
-                reloadSound.Play();
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>().startInteractTimer(reloadTime * (ammoMagTotal - ammoInMag));
             }
             reloadTimer += Time.deltaTime;
             if (reloadTimer >= reloadTime) Reload();
@@ -96,11 +99,11 @@ public class Weapon_Shotgun : MonoBehaviour, IWeapon
 
     public void Reload()
     {
+        reloadTimer = 0.00001f;
         Debug.Log("Reloaded");
-        isReloading = false;
-        if (ammoTotal == 0) return;
-        ammoTotal -= ammoMagTotal - ammoInMag;
-        ammoInMag = ammoMagTotal;
+        reloadSound.Play();
+        ammoTotal -= reloadStepIncrease;
+        ammoInMag += reloadStepIncrease;
         if (ammoTotal < 0)
         {
             ammoInMag += ammoTotal;

@@ -17,6 +17,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI objPopupTitle;
     public TextMeshProUGUI objPopupSub;
     public GameObject reloadPopUp;
+    public GameObject sniperOverlay;
 
     [Header("Info")]
     public float popupTime;

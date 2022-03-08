@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     public GameObject mainButton;
     [Header("Screens")]
     public GameObject startScreen;
+    public GameObject creditScreen;
     public GameObject quitPopup;
     public GameObject settings;
     [Header("StartGamePopup")]
@@ -48,6 +49,17 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void onCredits()
+    {
+        if (!creditScreen.activeSelf)
+        {
+            creditScreen.SetActive(true);
+        } else
+        {
+            creditScreen.SetActive(false);
+        }
+    }
+
     public void onPlay()
     {
         PlayerPrefs.SetInt("difficulty", (int) difficulty.value);
@@ -63,7 +75,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void OnQuit()
+    public void onQuit()
     {
         if (!quitPopup.activeSelf)
             quitPopup.SetActive(true);

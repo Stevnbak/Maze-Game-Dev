@@ -25,9 +25,12 @@ public class MovementController : MonoBehaviour
     public float speedBoostTime;
     public float speedBoostEffect;
 
+    Animator animator;
+
     void Start()
     {
         sensitivity = PlayerPrefs.GetFloat("sensitivity");
+        animator = transform.Find("Model").GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Confined;
         maxSpeed = walkSpeed;
         Physics.gravity = new Vector3(0,-gravity,0);

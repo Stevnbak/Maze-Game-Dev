@@ -14729,7 +14729,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7139092204731031182}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eae79b7b20949e48b80349d55019eac, type: 3}
   m_Name: 
@@ -14737,7 +14737,8 @@ MonoBehaviour:
   damage: 3
   firerate: 1
   setMagTotal: 5
-  reloadTime: 1.5
+  reloadTime: 0.2
+  reloadStepIncrease: 1
   bulletsPerShot: 10
   lookingAt: {fileID: 0}
   bulletSpreadVariance: {x: 0.25, y: 0.25, z: 0.25}
@@ -14896,7 +14897,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0eb673dc31e22fd4a8f158be386c8053, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 66577d73790c583448024256a051d309, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

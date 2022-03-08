@@ -31,6 +31,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
     public bool isReloading { get; set; }
     public bool isADSing { get; set; }
     public float fireTime { get; set; }
+    HUD hud;
 
     public void Initialize()
     {
@@ -44,6 +45,7 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         isADSing = false;
         fireTime = 0;
         Reload();
+        hud = GameObject.FindGameObjectWithTag("GameController").GetComponent<HUD>();
     }
 
     void Update()
@@ -68,10 +70,16 @@ public class Weapon_DMR : MonoBehaviour, IWeapon
         {
             Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.parent.Find("ADS_Weapon_Pos").position, Time.deltaTime * 10f);
             transform.position = newposition;
+            hud.sniperOverlay.SetActive(true);
+            hud.Crosshair.gameObject.SetActive(false);
+            transform.Find("Model").gameObject.SetActive(false);
         } else
         {
             Vector3 newposition = Vector3.Lerp(transform.position, transform.parent.position, Time.deltaTime * 10f);
             transform.position = newposition;
+            hud.sniperOverlay.SetActive(false);
+            hud.Crosshair.gameObject.SetActive(true);
+            transform.Find("Model").gameObject.SetActive(true);
         }
 
         //VFX item stop

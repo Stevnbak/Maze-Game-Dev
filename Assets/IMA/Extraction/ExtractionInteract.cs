@@ -29,6 +29,9 @@ public class ExtractionInteract : MonoBehaviour, IInteractable
         if (gameController.extractionReady)
         {
             lightMaterial.color = Color.green;
+        } else
+        {
+            lightMaterial.color = Color.red;
         }
     }
 

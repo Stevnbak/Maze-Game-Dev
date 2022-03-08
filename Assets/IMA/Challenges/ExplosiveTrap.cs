@@ -39,13 +39,17 @@ public class ExplosiveTrap : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.CompareTag("Player"))
+            float distance = Vector3.Distance(hitCollider.transform.position, transform.position);
+            float damageTaken = damage * (radius / distance);
+            if (distance > radius) damageTaken = 0;
+
+            if (hitCollider.CompareTag("Player"))
             {
-                hitCollider.GetComponent<PlayerInfo>().TakeDamage(damage / (Vector3.Distance(hitCollider.transform.position, transform.position) / radius));
+                hitCollider.GetComponent<PlayerInfo>().TakeDamage(damageTaken);
             }
             if (hitCollider.CompareTag("Creature"))
             {
-                hitCollider.GetComponent<ICreature>().TakeDamage(damage / (Vector3.Distance(hitCollider.transform.position, transform.position) / radius));
+                hitCollider.GetComponent<ICreature>().TakeDamage(damageTaken);
             }
         }
         Destroy(gameObject);

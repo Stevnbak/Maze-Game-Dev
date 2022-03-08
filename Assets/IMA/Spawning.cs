@@ -183,7 +183,7 @@ public class Spawning : MonoBehaviour
         r = Random.Range(1, 3);
         int y = Random.Range(0, mazeSize);
         if (y > mazeSize / 3 && y < mazeSize / 3 * 2) y = mazeSize / 3 * r;
-        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, -0.3f, (y * 5 - mazeSize * 2.5f) + 2.5f);
+        Vector3 position = new Vector3((x * 5 - mazeSize * 2.5f) + 2.5f, -0.5f, (y * 5 - mazeSize * 2.5f) + 2.5f);
         Instantiate(machine, position, Quaternion.identity, parent);
     }
 }
